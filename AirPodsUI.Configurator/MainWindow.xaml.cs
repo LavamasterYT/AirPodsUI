@@ -1,20 +1,8 @@
 ﻿using AdonisUI;
-using AdonisUI.Controls;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32;
+using AdonisUI.Controls;
+using AirPodsUI.Configurator.Pages;
 
 namespace AirPodsUI.Configurator
 {
@@ -26,6 +14,11 @@ namespace AirPodsUI.Configurator
         public MainWindow()
         {
             InitializeComponent();
+
+            // Set the page to the read me 
+            MainFrame.NavigationService.Navigate(new MainPage());
+
+            // Get system app theme and set app theme based on values
             RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
             if (int.TryParse(reg.GetValue("AppsUseLightTheme").ToString(), out int result))
             {
@@ -40,6 +33,11 @@ namespace AirPodsUI.Configurator
                     ResourceLocator.SetColorScheme(Application.Current.Resources, ResourceLocator.LightColorScheme);
                 }
             }
+        }
+
+        private void ShowPairPage(object sender, RoutedEventArgs e)
+        {
+            MainFrame.NavigationService.Navigate(new PairPage());
         }
     }
 }

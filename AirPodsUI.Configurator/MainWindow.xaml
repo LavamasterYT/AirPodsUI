@@ -4,7 +4,22 @@
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:a="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         Title="AirPodsUI Configurator"
-        Height="530"
         TitleBarBackground="Black"
+        Height="530"
         Width="950">
+
+    <DockPanel Margin="5 5">
+        <!-- The devices menu bar -->
+        <DockPanel DockPanel.Dock="Left" LastChildFill="False" Width="200">
+            <TextBlock FontWeight="Bold" Text="Devices:" DockPanel.Dock="Top" HorizontalAlignment="Left" FontSize="18"/>
+            <ListBox x:Name="Devices" DockPanel.Dock="Top"/>
+            <Button x:Name="StartService" Content="Start Service" Height="25" DockPanel.Dock="Bottom"/>
+            <Button x:Name="AddDevice" Content="Add Device" Height="25" DockPanel.Dock="Bottom" Margin="0 5" Click="ShowPairPage"/>
+        </DockPanel>
+        
+        <!-- The device configuration, pairing, settings, etc page -->
+        <GroupBox Margin="5 5">
+            <Frame DockPanel.Dock="Right" x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+        </GroupBox>
+    </DockPanel>
 </a:AdonisWindow>
