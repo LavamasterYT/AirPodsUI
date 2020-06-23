@@ -99,6 +99,7 @@ namespace AirPodsUI.Configurator
                 return;
             }
 
+            MainFrame.NavigationService.Navigate(new DeviceConfigPage());
         }
     }
 }
