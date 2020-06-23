@@ -16,8 +16,8 @@
                 <StackPanel>
                     <Label Content="Pair Bluetooth Device:"/>
                     <ListBox Height="300" x:Name="BtDevices" SelectionChanged="SelectedDeviceBT" BorderBrush="Black" BorderThickness="1" Margin="0 5"/>
-                    <DockPanel>
-                        <Button Content="Apply Selected Device" Width="150" DockPanel.Dock="Right" Margin="5 0" Click="ApplyBT"/>
+                    <DockPanel x:Name="btInfo">
+                        <Button x:Name="applyBT" Content="Apply Selected Device" Width="150" DockPanel.Dock="Right" Margin="5 0" Click="ApplyBT"/>
                         <Button Content="Refresh" Width="75" DockPanel.Dock="Right" Margin="5 0" Click="RefreshBT"/>
                         <TextBox x:Name="btName" adonisExtensions:WatermarkExtension.IsWatermarkVisible="True" adonisExtensions:WatermarkExtension.Watermark="Enter custom device name" Margin="5 0" />
                     </DockPanel>
@@ -29,8 +29,8 @@
                 <StackPanel>
                     <Label Content="Pair USB Device:"/>
                     <ListBox Height="300" x:Name="usbDevices" SelectionChanged="SelectedDeviceUSB" BorderBrush="Black" BorderThickness="1" Margin="0 5"/>
-                    <DockPanel>
-                        <Button Content="Apply Selected Device" Width="150" DockPanel.Dock="Right" Margin="5 0" Click="ApplyUSB"/>
+                    <DockPanel x:Name="usbInfo">
+                        <Button x:Name="applyUSB" Content="Apply Selected Device" Width="150" DockPanel.Dock="Right" Margin="5 0" Click="ApplyUSB"/>
                         <Button Content="Refresh" Width="75" DockPanel.Dock="Right" Margin="5 0" Click="RefreshUSB"/>
                         <TextBox x:Name="usbName" adonisExtensions:WatermarkExtension.IsWatermarkVisible="True" adonisExtensions:WatermarkExtension.Watermark="Enter custom device name" Margin="5 0" />
                     </DockPanel>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AirPodsUI.Configurator.Models
 {
-    public enum DeviceType
+    public enum DeviceTypes
     {
         Bluetooth,
         USB

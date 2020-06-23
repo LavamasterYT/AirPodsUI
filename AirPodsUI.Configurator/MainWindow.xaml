@@ -12,7 +12,16 @@
         <!-- The devices menu bar -->
         <DockPanel DockPanel.Dock="Left" LastChildFill="False" Width="200">
             <TextBlock FontWeight="Bold" Text="Devices:" DockPanel.Dock="Top" HorizontalAlignment="Left" FontSize="18"/>
-            <ListBox x:Name="Devices" DockPanel.Dock="Top"/>
+            <ListBox x:Name="Devices" DockPanel.Dock="Top" SelectionChanged="DevicesIndexChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding ImageSource}" Width="25" Height="25"/>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding DeviceName}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <Button x:Name="StartService" Content="Start Service" Height="25" DockPanel.Dock="Bottom"/>
             <Button x:Name="AddDevice" Content="Add Device" Height="25" DockPanel.Dock="Bottom" Margin="0 5" Click="ShowPairPage"/>
         </DockPanel>

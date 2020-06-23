@@ -8,8 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\bluetooth.png" />
+    <None Remove="Assets\usb.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AdonisUI" Version="1.15.0" />
     <PackageReference Include="AdonisUI.ClassicTheme" Version="1.15.0" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Management" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pop-Up\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\bluetooth.png" />
+    <Resource Include="Assets\usb.png" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AirPodsUI.Configurator.Models
 {
-    class BluetoothDevice : IDevice
+    class BluetoothDevices
     {
         public string DeviceName { get; set; }
         public string DeviceID { get; set; }

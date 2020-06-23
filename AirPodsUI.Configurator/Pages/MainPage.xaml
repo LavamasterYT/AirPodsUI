@@ -14,7 +14,7 @@
         <Label Content="I just want to point out a few things:" FontWeight="Normal"/>
         <Label Content="- All the configuration and stuff are stored in your Documents folder inside AirPodsUI." FontWeight="Normal"/>
         <Label Content="- I wouldn't suggest messing with anything in the AirPodsUI folder unless adding assets or templates." FontWeight="Normal"/>
-        <Label Content="- If you know a thing or 2 about C#, feel free to edit the source code to optimize or add stuff!" FontWeight="Normal"/>
+        <Label Content="- If you know a thing or two about C#, feel free to edit the source code to optimize or add stuff!" FontWeight="Normal"/>
         <Label Content=" " FontWeight="Normal"/>
         <Label Content="If you have found a bug or something, file a issue on the GitHub repository." FontWeight="Normal"/>
         <Label Content="If you need help setting this application up or confused on something or just want to talk, contact me!" FontWeight="Normal"/>
