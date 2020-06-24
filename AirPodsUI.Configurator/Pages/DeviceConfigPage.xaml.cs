@@ -22,5 +22,35 @@ namespace AirPodsUI.Configurator.Pages
         {
             InitializeComponent();
         }
+
+        private void remove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void refresh_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void dupe_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void new_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void tempConfig_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pop-Up\" />
+    <Folder Include="Fonts\" />
   </ItemGroup>
 
   <ItemGroup>

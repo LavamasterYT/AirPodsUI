@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:AirPodsUI.Configurator.Pages"
+      xmlns:a="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DeviceConfigPage">
@@ -19,12 +19,29 @@
 
             <DockPanel LastChildFill="True" Margin="10 10" Grid.Column="0">
                 <Label DockPanel.Dock="Top" Content="Templates:"/>
-                <ListBox x:Name="Templates" BorderBrush="Black" BorderThickness="1" Margin="0 10">
-                    
+                <ListBox x:Name="Templates" BorderBrush="Gray" BorderThickness="1" Margin="0 10">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Remove" x:Name="remove" Click="remove_Click"/>
+                            <MenuItem Header="Add" x:Name="add" Click="add_Click"/>
+                            <MenuItem Header="Refresh" x:Name="refresh" Click="refresh_Click"/>
+                            <MenuItem Header="Duplicate" x:Name="dupe" Click="dupe_Click"/>
+                            <MenuItem Header="New" x:Name="new" Click="new_Click"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                 </ListBox>
             </DockPanel>
 
-            <Border Grid.Column="1" Margin="10 10"></Border>
+            <Border Grid.Column="1" Margin="10 10" CornerRadius="10" a:LayerExtension.Layer="2">
+                <GroupBox x:Name="selectTemplatePreview">
+                    
+                </GroupBox>
+            </Border>
+
+            <DockPanel Margin="10 10" LastChildFill="False" Grid.Column="2" a:LayerExtension.Layer="2">
+                <Button Height="25" Content="Open Template Configurator" x:Name="tempConfig" Click="tempConfig_Click" DockPanel.Dock="Top" Margin="0 5"/>
+                <Button Height="25" Content="Remove Device" DockPanel.Dock="Bottom" Margin="0 5" Background="Crimson" a:CursorSpotlightExtension.BackgroundBrush="Red"/>
+            </DockPanel>
         </Grid>
     </DockPanel>
 </Page>

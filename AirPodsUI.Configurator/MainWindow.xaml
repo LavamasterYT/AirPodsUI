@@ -6,7 +6,9 @@
         Title="AirPodsUI Configurator"
         TitleBarBackground="Black"
         Height="530"
-        Width="950">
+        Width="950"
+        MinWidth="1000"
+        MinHeight="530">
 
     <DockPanel Margin="5 5">
         <!-- The devices menu bar -->
