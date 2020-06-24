@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirPodsUI.Configurator.PopUp;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -45,6 +46,16 @@ namespace AirPodsUI.Configurator
             if (!File.Exists(Helper.PairedDevicesFile))
             {
                 File.WriteAllText(Helper.PairedDevicesFile, PDSerialize.ToJson(new PairedDevicesJson() { Devices = new List<Device>() }));
+            }
+
+            //if (e.Args.Length == 2)
+            {
+                //new PencilPopup().Show();
+                new BannerPopup().Show();
+            }
+            //else
+            {
+                //new MainWindow();
             }
         }
     }
