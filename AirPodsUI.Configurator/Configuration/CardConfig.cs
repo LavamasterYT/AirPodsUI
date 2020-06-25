@@ -4,25 +4,33 @@ using System.Text;
 
 namespace AirPodsUI.Configurator.Configuration
 {
-    class CardConfig
+    public class CardConfig
     {
         public string Name { get; set; } = "Card Default";
 
         public string Background { get; set; } = "#FFFFFF";
 
-        public string NameForeground { get; set; }
+        public string NameForeground { get; set; } = "#000000";
 
-        public string ButtonForeground { get; set; }
+        public string ButtonForeground { get; set; } = "#000000";
 
-        public string ButtonBackground { get; set; }
+        public string ButtonBackground { get; set; } = "#AAAAAA";
 
-        public string Tint { get; set; }
+        public string Tint { get; set; } = "";
 
-        public string ButtonText { get; set; }
+        public string ButtonText { get; set; } = "Done";
 
-        public string StaticName { get; set; }
+        public string Location { get; set; } = "Center";
 
-        public string MediaPath { get; set; }
+        public string StaticName { get; set; } = "";
+
+        public string MediaPath { get; set; } = "pack://application:,,,/Assets/pro.mp4";
+
+        public string StretchMode { get; set; } = "None";
+
+        public string TimeOut { get; set; } = "5000";
+
+        public string Loop { get; set; } = "true";
     }
 }
 /*

@@ -1,9 +1,30 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace AirPodsUI.Configurator
 {
     public static class Helper
     {
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        public static IntPtr ActiveWindowHandle
+        {
+            get
+            {
+                return GetForegroundWindow();
+            }
+        }
+
+        public static void SetActiveWindow(IntPtr hWnd)
+        {
+            SetForegroundWindow(hWnd);
+        }
+
         /// <summary>
         /// Get the AirPodsUI folder
         /// </summary>

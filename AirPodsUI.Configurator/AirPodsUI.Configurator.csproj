@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Assets\AirPods.png" />
     <None Remove="Assets\bluetooth.png" />
+    <None Remove="Assets\pro.mp4" />
     <None Remove="Assets\tritone.mp3" />
     <None Remove="Assets\usb.png" />
     <None Remove="Fonts\SF-Pro-Display-Light.otf" />
@@ -31,6 +32,7 @@
   <ItemGroup>
     <Resource Include="Assets\AirPods.png" />
     <Resource Include="Assets\bluetooth.png" />
+    <Resource Include="Assets\pro.mp4" />
     <Resource Include="Assets\tritone.mp3" />
     <Resource Include="Assets\usb.png" />
     <Resource Include="Fonts\SF-Pro-Display-Light.otf" />

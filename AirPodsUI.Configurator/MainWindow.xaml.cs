@@ -100,7 +100,7 @@ namespace AirPodsUI.Configurator
                 return;
             }
 
-            MainFrame.NavigationService.Navigate(new DeviceConfigPage());
+            MainFrame.NavigationService.Navigate(new DeviceConfigPage(jsonFile, Devices.SelectedIndex));
         }
     }
 }

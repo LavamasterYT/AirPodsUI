@@ -23,12 +23,13 @@ namespace AirPodsUI.Configurator.Cards
     {
         Timer timer;
         bool FadingBottom;
-
+        IntPtr focused;
         public Pencil(PencilConfig config)
         {
             // Set variables
             InitializeComponent();
             timer = new Timer();
+            focused = Helper.ActiveWindowHandle;
 
             // Set colors and text
             background.Background = config.Background.ToBrush();
@@ -79,6 +80,7 @@ namespace AirPodsUI.Configurator.Cards
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Helper.SetActiveWindow(focused);
             // Fade and start timer
             if (!FadingBottom)
                 Dispatcher.Invoke(() => Fade(-60, 20, 10, 10, false, false));

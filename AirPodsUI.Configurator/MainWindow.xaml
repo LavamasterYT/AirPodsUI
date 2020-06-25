@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:a="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
-        Title="AirPodsUI Configurator"
+        Title="AirPodsUI Configurator 0.5a1 (Unstable)"
         TitleBarBackground="Black"
         Height="530"
         Width="950"

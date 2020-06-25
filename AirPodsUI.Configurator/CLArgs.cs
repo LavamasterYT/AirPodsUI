@@ -27,6 +27,13 @@ namespace AirPodsUI.Configurator
                     config.StaticName = args[1];
                 new Banner(config).Show();
             }
+            else if (ext == ".card")
+            {
+                CardConfig config = ConfigParser.ParseC(args[0]);
+                if (string.IsNullOrEmpty(config.StaticName))
+                    config.StaticName = args[1];
+                new Card(config).Show();
+            }
         }
     }
 }

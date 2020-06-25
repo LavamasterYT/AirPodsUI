@@ -30,10 +30,7 @@ namespace AirPodsUI.Configurator.Configuration
                 if (line.Length != 2)
                     throw new InvalidDataException();
 
-                line[1] = line[1].Replace("$airpods", "pack://application:,,,/Assets/AirPods.png");
-                line[1] = line[1].Replace("$tritone", "pack://application:,,,/Assets/tritone.mp3");
-                line[1] = line[1].Replace("$usb", "pack://application:,,,/Assets/usb.png");
-                line[1] = line[1].Replace("$bluetooth", "pack://application:,,,/Assets/bluetooth.png");
+                line[1] = ReplaceVariables(line[1]);
 
                 switch (line[0])
                 {
@@ -89,10 +86,7 @@ namespace AirPodsUI.Configurator.Configuration
                 if (line.Length != 2)
                     throw new InvalidDataException();
 
-                line[1] = line[1].Replace("$airpods", "pack://application:,,,/Assets/AirPods.png");
-                line[1] = line[1].Replace("$tritone", "pack://application:,,,/Assets/tritone.mp3");
-                line[1] = line[1].Replace("$usb", "pack://application:,,,/Assets/usb.png");
-                line[1] = line[1].Replace("$bluetooth", "pack://application:,,,/Assets/bluetooth.png");
+                line[1] = ReplaceVariables(line[1]);
 
                 switch (line[0])
                 {
@@ -132,6 +126,90 @@ namespace AirPodsUI.Configurator.Configuration
             }
 
             return result;
+        }
+
+        public static CardConfig ParseC(string file)
+        {
+            CardConfig result = new CardConfig();
+
+            List<string> lines = new List<string>();
+            using (StreamReader sr = new StreamReader(file))
+            {
+                while (!sr.EndOfStream)
+                {
+                    lines.Add(sr.ReadLine());
+                }
+            }
+
+            foreach (var i in lines)
+            {
+                if (i.StartsWith('#') || string.IsNullOrEmpty(i))
+                    continue;
+
+                string[] line = i.Split('=');
+
+                if (line.Length != 2)
+                    throw new InvalidDataException();
+
+                line[1] = ReplaceVariables(line[1]);
+
+                switch (line[0])
+                {
+                    case "TemplateName":
+                        result.Name = line[1];
+                        break;
+                    case "Background":
+                        result.Background = line[1];
+                        break;
+                    case "NameForeground":
+                        result.NameForeground = line[1];
+                        break;
+                    case "ButtonForeground":
+                        result.ButtonForeground = line[1];
+                        break;
+                    case "ButtonBackground":
+                        result.ButtonBackground = line[1];
+                        break;
+                    case "StaticName":
+                        result.StaticName = line[1];
+                        break;
+                    case "Tint":
+                        result.Tint = line[1];
+                        break;
+                    case "ButtonText":
+                        result.ButtonText = line[1];
+                        break;
+                    case "Location":
+                        result.Location= line[1];
+                        break;
+                    case "StretchMode":
+                        result.StretchMode = line[1];
+                        break;
+                    case "MediaLocation":
+                        result.MediaPath = line[1];
+                        break;
+                    case "TimeOut":
+                        result.TimeOut = line[1];
+                        break;
+                    case "Loop":
+                        result.Loop = line[1];
+                        break;
+                    default:
+                        throw new InvalidDataException();
+                }
+            }
+
+            return result;
+        }
+
+        private static string ReplaceVariables(string input)
+        {
+            input = input.Replace("$airpods", "pack://application:,,,/Assets/AirPods.png");
+            input = input.Replace("$tritone", "pack://application:,,,/Assets/tritone.mp3");
+            input = input.Replace("$usb", "pack://application:,,,/Assets/usb.png");
+            input = input.Replace("$bluetooth", "pack://application:,,,/Assets/bluetooth.png");
+            input = input.Replace("$pro", "pack://application:,,,/Assets/pro.mp4");
+            return input;
         }
     }
 }

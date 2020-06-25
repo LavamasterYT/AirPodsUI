@@ -24,11 +24,12 @@ namespace AirPodsUI.Configurator.Cards
     {
         Timer timer;
         MediaPlayer player;
-
+        IntPtr focused;
         public Banner(NotificationConfig config)
         {
             InitializeComponent();
             Loaded += BannerPopup_Loaded;
+            focused = Helper.ActiveWindowHandle;
 
             // Setting variables
             timer = new Timer();
@@ -83,6 +84,7 @@ namespace AirPodsUI.Configurator.Cards
 
         private void BannerPopup_Loaded(object sender, RoutedEventArgs e)
         {
+            Helper.SetActiveWindow(focused);
             // Play sound and fade and start timer
             player.Play();
             Dispatcher.Invoke(() => Fade(-90, 10, 10, 10, false, false));
