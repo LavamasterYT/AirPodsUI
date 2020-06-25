@@ -1,14 +1,11 @@
 # AirPodsUI
 AirPods pop up and animation for Windows!
 
-## For those that have come from the other repository:
-This is a new repository as the old one felt cluttered and stuff and the repository name was a bit long.
-
 ## What's this?
 This adds the AirPods pop up from iOS and (new) the pill looking pop up from iOS 14!
 
 ## Features?
-Apart from adding the pop up and the pill looking pop up, this has many more customization options:
+Apart from adding the pop up and the Apple Pencil looking pop up, this has many more customization options:
 
 - Change background and foreground color
 - Custom device name text or button text
