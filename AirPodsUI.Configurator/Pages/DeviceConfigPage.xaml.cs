@@ -52,5 +52,10 @@ namespace AirPodsUI.Configurator.Pages
         {
 
         }
+
+        private void applyConfig_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

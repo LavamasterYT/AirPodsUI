@@ -1,4 +1,4 @@
-﻿using AirPodsUI.Configurator.PopUp;
+﻿using AirPodsUI.Configurator.Cards;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -48,14 +48,13 @@ namespace AirPodsUI.Configurator
                 File.WriteAllText(Helper.PairedDevicesFile, PDSerialize.ToJson(new PairedDevicesJson() { Devices = new List<Device>() }));
             }
 
-            //if (e.Args.Length == 2)
+            if (e.Args.Length == 2)
             {
-                //new PencilPopup().Show();
-                new BannerPopup().Show();
+                CLArgs.Parse(e.Args);
             }
-            //else
+            else
             {
-                //new MainWindow();
+                new MainWindow().Show();
             }
         }
     }

@@ -35,8 +35,7 @@ namespace AirPodsUI.Configurator.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshBT(sender, e);
-            RefreshUSB(sender, e);
+            
         }
 
         private void SelectedDeviceUSB(object sender, SelectionChangedEventArgs e)

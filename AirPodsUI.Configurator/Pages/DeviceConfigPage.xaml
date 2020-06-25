@@ -40,6 +40,7 @@
 
             <DockPanel Margin="10 10" LastChildFill="False" Grid.Column="2" a:LayerExtension.Layer="2">
                 <Button Height="25" Content="Open Template Configurator" x:Name="tempConfig" Click="tempConfig_Click" DockPanel.Dock="Top" Margin="0 5"/>
+                <Button Height="25" Content="Save Settings" x:Name="applyConfig" Click="applyConfig_Click" DockPanel.Dock="Top" Margin="0 5"/>
                 <Button Height="25" Content="Remove Device" DockPanel.Dock="Bottom" Margin="0 5" Background="Crimson" a:CursorSpotlightExtension.BackgroundBrush="Red"/>
             </DockPanel>
         </Grid>

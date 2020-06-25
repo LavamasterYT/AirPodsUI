@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Assets\AirPods.png" />
     <None Remove="Assets\bluetooth.png" />
+    <None Remove="Assets\tritone.mp3" />
     <None Remove="Assets\usb.png" />
     <None Remove="Fonts\SF-Pro-Display-Light.otf" />
     <None Remove="Fonts\SF-Pro-Display-Regular.otf" />
@@ -21,18 +22,16 @@
     <PackageReference Include="AdonisUI" Version="1.15.0" />
     <PackageReference Include="AdonisUI.ClassicTheme" Version="1.15.0" />
     <PackageReference Include="BlurryControls" Version="1.0.24" />
+    <PackageReference Include="FluentWPF" Version="0.8.0" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Management" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\AirPods.png" />
     <Resource Include="Assets\bluetooth.png" />
+    <Resource Include="Assets\tritone.mp3" />
     <Resource Include="Assets\usb.png" />
     <Resource Include="Fonts\SF-Pro-Display-Light.otf" />
     <Resource Include="Fonts\SF-Pro-Display-Regular.otf" />

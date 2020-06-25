@@ -26,7 +26,6 @@ namespace AirPodsUI.Configurator
             set
             {
                 _deviceListBind = value;
-                Devices.ItemsSource = _deviceListBind;
             }
         }
 
@@ -84,6 +83,8 @@ namespace AirPodsUI.Configurator
             {
                 deviceListBind.Add(new DeviceListModel { DeviceName = i.DeviceName, ImageSource = new Uri((i.DeviceType == "Bluetooth") ? "pack://application:,,,/Assets/bluetooth.png" : "pack://application:,,,/Assets/usb.png") });
             }
+            Devices.ItemsSource = deviceListBind;
+
         }
 
         private void ShowPairPage(object sender, RoutedEventArgs e)

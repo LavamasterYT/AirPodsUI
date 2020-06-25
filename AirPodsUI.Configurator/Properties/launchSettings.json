@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AirPodsUI.Configurator": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\Jose Molina\\Documents\\AirPodsUI\\Templates\\DarkMode.notif\" AirPods"
+    }
+  }
+}
