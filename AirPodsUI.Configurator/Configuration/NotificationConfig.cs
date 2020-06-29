@@ -6,15 +6,15 @@ namespace AirPodsUI.Configurator.Configuration
 {
     public class NotificationConfig
     {
-        public string Name { get; set; } = "Notification Default";
+        public string TemplateName { get; set; } = "Notification Default";
 
         public string Background { get; set; } = "#EF202020";
 
         public string CaptionForeground { get; set; } = "#FFFFFF";
 
-        public string AppNameForeground { get; set; } = "#808080";
+        public string AppNameColor { get; set; } = "#808080";
 
-        public string StatusForeground { get; set; } = "#FFFFFF";
+        public string StatusTextForeground { get; set; } = "#FFFFFF";
 
         public string AppName { get; set; } = "AIRPODSUI";
 
@@ -22,9 +22,9 @@ namespace AirPodsUI.Configurator.Configuration
 
         public string StatusText { get; set; } = "Connected";
 
-        public string IconPath { get; set; } = "pack://application:,,,/Assets/AirPods.png";
+        public string IconLocation { get; set; } = "pack://application:,,,/Assets/AirPods.png";
 
-        public string NotifSound { get; set; } = "pack://application:,,,/Assets/tritone.mp3";
+        public string NotificationSound { get; set; } = "pack://application:,,,/Assets/tritone.mp3";
     }
 }
 /*

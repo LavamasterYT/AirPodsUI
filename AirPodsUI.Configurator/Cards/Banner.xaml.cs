@@ -36,10 +36,10 @@ namespace AirPodsUI.Configurator.Cards
             player = new MediaPlayer();
 
             // Setting notification
-            if (config.NotifSound.StartsWith("pack://application:,,,/Assets/"))
+            if (config.NotificationSound.StartsWith("pack://application:,,,/Assets/"))
             {
                 // If its a preset, write to a file to play
-                Stream stream = Application.GetResourceStream(new Uri(config.NotifSound)).Stream;
+                Stream stream = Application.GetResourceStream(new Uri(config.NotificationSound)).Stream;
 
                 Directory.CreateDirectory(System.IO.Path.GetTempPath() + "\\AirPodsUI\\Assets\\");
 
@@ -52,18 +52,18 @@ namespace AirPodsUI.Configurator.Cards
             }
             else
             {
-                player.Open(new Uri(config.NotifSound, UriKind.RelativeOrAbsolute));
+                player.Open(new Uri(config.NotificationSound, UriKind.RelativeOrAbsolute));
             }
 
             background.Background = config.Background.ToBrush();
-            icon.Source = new BitmapImage(new Uri(config.IconPath));
+            icon.Source = new BitmapImage(new Uri(config.IconLocation));
             appName.Content = config.AppName;
-            appName.Foreground = config.AppNameForeground.ToBrush();
-            appDate.Foreground = config.AppNameForeground.ToBrush();
+            appName.Foreground = config.AppNameColor.ToBrush();
+            appDate.Foreground = config.AppNameColor.ToBrush();
             caption.Content = config.StaticName;
             caption.Foreground = config.CaptionForeground.ToBrush();
             status.Content = config.StatusText;
-            status.Foreground = config.StatusForeground.ToBrush();
+            status.Foreground = config.StatusTextForeground.ToBrush();
 
             // Timer to close after 3.5 seconds
             timer.Interval = 3500;

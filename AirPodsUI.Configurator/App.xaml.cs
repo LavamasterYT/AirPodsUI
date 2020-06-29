@@ -55,7 +55,7 @@ namespace AirPodsUI.Configurator
             }
             else
             {
-                new MainWindow().Show();
+                new MainWindow();
             }
         }
     }

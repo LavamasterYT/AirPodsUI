@@ -35,16 +35,16 @@ namespace AirPodsUI.Configurator.Configuration
                 switch (line[0])
                 {
                     case "TemplateName":
-                        result.Name = line[1];
+                        result.TemplateName = line[1];
                         break;
                     case "Background":
                         result.Background = line[1];
                         break;
                     case "DeviceNameTextForeground":
-                        result.DeviceNameForeground = line[1];
+                        result.DeviceNameTextForeground = line[1];
                         break;
                     case "StatusTextForeground":
-                        result.StatusForeground = line[1];
+                        result.StatusTextForeground = line[1];
                         break;
                     case "StaticName":
                         result.StaticName = line[1];
@@ -91,7 +91,7 @@ namespace AirPodsUI.Configurator.Configuration
                 switch (line[0])
                 {
                     case "TemplateName":
-                        result.Name = line[1];
+                        result.TemplateName = line[1];
                         break;
                     case "Background":
                         result.Background = line[1];
@@ -100,10 +100,10 @@ namespace AirPodsUI.Configurator.Configuration
                         result.CaptionForeground = line[1];
                         break;
                     case "AppNameColor":
-                        result.AppNameForeground = line[1];
+                        result.AppNameColor = line[1];
                         break;
                     case "StatusTextForeground":
-                        result.StatusForeground = line[1];
+                        result.StatusTextForeground = line[1];
                         break;
                     case "StaticName":
                         result.StaticName = line[1];
@@ -115,10 +115,10 @@ namespace AirPodsUI.Configurator.Configuration
                         result.AppName = line[1];
                         break;
                     case "IconLocation":
-                        result.IconPath = line[1];
+                        result.IconLocation = line[1];
                         break;
                     case "NotificationSound":
-                        result.NotifSound = line[1];
+                        result.NotificationSound = line[1];
                         break;
                     default:
                         throw new InvalidDataException();
@@ -156,7 +156,7 @@ namespace AirPodsUI.Configurator.Configuration
                 switch (line[0])
                 {
                     case "TemplateName":
-                        result.Name = line[1];
+                        result.TemplateName = line[1];
                         break;
                     case "Background":
                         result.Background = line[1];
@@ -186,7 +186,7 @@ namespace AirPodsUI.Configurator.Configuration
                         result.StretchMode = line[1];
                         break;
                     case "MediaLocation":
-                        result.MediaPath = line[1];
+                        result.MediaLocation = line[1];
                         break;
                     case "TimeOut":
                         result.TimeOut = line[1];

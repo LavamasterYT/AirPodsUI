@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace AirPodsUI.Configurator
 {
@@ -24,6 +25,8 @@ namespace AirPodsUI.Configurator
         {
             SetForegroundWindow(hWnd);
         }
+
+        public static void Error(string title, string message) => MessageBox.Show(message, title, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
 
         /// <summary>
         /// Get the AirPodsUI folder

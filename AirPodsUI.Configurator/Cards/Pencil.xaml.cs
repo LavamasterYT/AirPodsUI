@@ -35,9 +35,9 @@ namespace AirPodsUI.Configurator.Cards
             background.Background = config.Background.ToBrush();
             devIcon.Source = new BitmapImage(new Uri(config.IconLocation, UriKind.RelativeOrAbsolute));
             devName.Content = config.StaticName;
-            devName.Foreground = config.DeviceNameForeground.ToBrush();
+            devName.Foreground = config.DeviceNameTextForeground.ToBrush();
             devStatus.Content = config.StatusText;
-            devStatus.Foreground = config.StatusForeground.ToBrush();
+            devStatus.Foreground = config.StatusTextForeground.ToBrush();
 
             // Set timer to close after 5 seconds
             timer.Interval = 5000;

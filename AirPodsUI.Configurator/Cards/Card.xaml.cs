@@ -43,10 +43,10 @@ namespace AirPodsUI.Configurator.Cards
             // Try for image
             bool isImage = false;
 
-            string ext = System.IO.Path.GetExtension(config.MediaPath);
-            if (config.MediaPath.StartsWith("pack://application:,,,/Assets/"))
+            string ext = System.IO.Path.GetExtension(config.MediaLocation);
+            if (config.MediaLocation.StartsWith("pack://application:,,,/Assets/"))
             {
-                Stream stream = Application.GetResourceStream(new Uri(config.MediaPath)).Stream;
+                Stream stream = Application.GetResourceStream(new Uri(config.MediaLocation)).Stream;
 
                 Directory.CreateDirectory(System.IO.Path.GetTempPath() + "\\AirPodsUI\\Assets\\");
 
@@ -55,12 +55,12 @@ namespace AirPodsUI.Configurator.Cards
                     stream.CopyTo(file);
                 }
 
-                config.MediaPath = System.IO.Path.GetTempPath() + "\\AirPodsUI\\Assets\\file" + ext;
+                config.MediaLocation = System.IO.Path.GetTempPath() + "\\AirPodsUI\\Assets\\file" + ext;
             }
 
             try
             {
-                System.Drawing.Image.FromFile(config.MediaPath);
+                System.Drawing.Image.FromFile(config.MediaLocation);
                 isImage = true;
             }
             catch (OutOfMemoryException)
@@ -68,30 +68,35 @@ namespace AirPodsUI.Configurator.Cards
                 isImage = false;
             }
 
+            if (config.StretchMode == "None")
+            {
+                image.Stretch = Stretch.None;
+                media.Stretch = Stretch.None;
+            }
+            if (config.StretchMode == "Fill")
+            {
+                image.Stretch = Stretch.Fill;
+                media.Stretch = Stretch.Fill;
+            }
+            if (config.StretchMode == "UniformToFill")
+            {
+                image.Stretch = Stretch.UniformToFill;
+                media.Stretch = Stretch.UniformToFill;
+            }
+            if (config.StretchMode == "Uniform")
+            {
+                image.Stretch = Stretch.Uniform;
+                media.Stretch = Stretch.Uniform;
+            }
+
             if (isImage)
             {
-                if (config.StretchMode == "None")
-                {
-                    image.Stretch = Stretch.None;
-                }
-                if (config.StretchMode == "Fill")
-                {
-                    image.Stretch = Stretch.Fill;
-                }
-                if (config.StretchMode == "UniformToFill")
-                {
-                    image.Stretch = Stretch.UniformToFill;
-                }
-                if (config.StretchMode == "Uniform")
-                {
-                    image.Stretch = Stretch.Uniform;
-                }
-                image.Source = new BitmapImage(new Uri(config.MediaPath));
+                image.Source = new BitmapImage(new Uri(config.MediaLocation));
                 image.Visibility = Visibility.Visible;
             }
             else
             {
-                media.Source = new Uri(config.MediaPath);
+                media.Source = new Uri(config.MediaLocation);
                 media.Play();
                 media.Visibility = Visibility.Visible;
                 media.MediaEnded += Media_MediaEnded;
@@ -126,7 +131,7 @@ namespace AirPodsUI.Configurator.Cards
             background.Background = config.Background.ToBrush();
             devName.Content = config.StaticName;
             devName.Foreground = config.NameForeground.ToBrush();
-            media.Source = new Uri(config.MediaPath);
+            media.Source = new Uri(config.MediaLocation);
             done.Content = config.ButtonText;
             done.Background = config.ButtonBackground.ToBrush();
             done.Foreground = config.ButtonForeground.ToBrush();
@@ -157,6 +162,11 @@ namespace AirPodsUI.Configurator.Cards
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Dispatcher.Invoke(() => FadeOut());
+        }
+
+        private void done_Click(object sender, RoutedEventArgs e)
+        {
+            Window_MouseDown(sender, null);
         }
 
         private async void FadeIn()

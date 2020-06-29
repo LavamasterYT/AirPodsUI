@@ -57,17 +57,17 @@ namespace AirPodsUI.Configurator.Pages
                 if (ext == ".card")
                 {
                     Configuration.Add(files[i], ConfigParser.ParseC(files[i]));
-                    Templates.Items.Add($"(Card) { ((CardConfig)Configuration[files[i]]).Name }");
+                    Templates.Items.Add($"(Card) { ((CardConfig)Configuration[files[i]]).TemplateName }");
                 }
                 else if (ext == ".pencil")
                 {
                     Configuration.Add(files[i], ConfigParser.ParseP(files[i]));
-                    Templates.Items.Add($"(Pencil) { ((PencilConfig)Configuration[files[i]]).Name }");
+                    Templates.Items.Add($"(Pencil) { ((PencilConfig)Configuration[files[i]]).TemplateName }");
                 }
                 else if (ext == ".notif")
                 {
                     Configuration.Add(files[i], ConfigParser.ParseN(files[i]));
-                    Templates.Items.Add($"(Banner) { ((NotificationConfig)Configuration[files[i]]).Name }");
+                    Templates.Items.Add($"(Banner) { ((NotificationConfig)Configuration[files[i]]).TemplateName }");
                 }
 
                 if (json.Devices[currentDev].TemplateLocation == files[i])

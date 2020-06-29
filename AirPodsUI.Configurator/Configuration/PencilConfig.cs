@@ -6,13 +6,13 @@ namespace AirPodsUI.Configurator.Configuration
 {
     public class PencilConfig
     {
-        public string Name { get; set; } = "Pencil Default";
+        public string TemplateName { get; set; } = "Pencil Default";
 
         public string Background { get; set; } = "#252525";
 
-        public string DeviceNameForeground { get; set; } = "#FFFFFF";
+        public string DeviceNameTextForeground { get; set; } = "#FFFFFF";
 
-        public string StatusForeground { get; set; } = "#A9A9A9";
+        public string StatusTextForeground { get; set; } = "#A9A9A9";
 
         public string StaticName { get; set; } = "";
 

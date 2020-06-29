@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AirPodsUI.Configurator.Configuration
+﻿namespace AirPodsUI.Configurator.Configuration
 {
     public class CardConfig
     {
-        public string Name { get; set; } = "Card Default";
+        public string TemplateName { get; set; } = "Card Default";
 
         public string Background { get; set; } = "#FFFFFF";
 
@@ -24,7 +20,7 @@ namespace AirPodsUI.Configurator.Configuration
 
         public string StaticName { get; set; } = "";
 
-        public string MediaPath { get; set; } = "pack://application:,,,/Assets/pro.mp4";
+        public string MediaLocation { get; set; } = "pack://application:,,,/Assets/pro.mp4";
 
         public string StretchMode { get; set; } = "None";
 

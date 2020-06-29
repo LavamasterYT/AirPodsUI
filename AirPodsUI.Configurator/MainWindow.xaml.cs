@@ -2,6 +2,7 @@
 using System.Windows;
 using Microsoft.Win32;
 using AdonisUI.Controls;
+using MessageBox = System.Windows.MessageBox;
 using AirPodsUI.Configurator.Pages;
 using System.IO;
 using AirPodsUI.Configurator.Models;
@@ -18,16 +19,8 @@ namespace AirPodsUI.Configurator
     {
         FileSystemWatcher jsonWatcher;
         PairedDevicesJson jsonFile;
-        List<DeviceListModel> _deviceListBind;
 
-        List<DeviceListModel> deviceListBind
-        {
-            get => _deviceListBind;
-            set
-            {
-                _deviceListBind = value;
-            }
-        }
+        List<DeviceListModel> deviceListBind { get; set; }
 
         public MainWindow()
         {
@@ -35,6 +28,12 @@ namespace AirPodsUI.Configurator
 
             // Set the page to the read me 
             MainFrame.NavigationService.Navigate(new MainPage());
+
+            if (int.Parse(Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion").GetValue("ReleaseId").ToString()) < 1903)
+            {
+                MessageBox.Show("This program detects that you are running a version of Windows that is not supported by this program. Please update to the latest version in order to continue.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                Environment.Exit(0);
+            }
 
             // Get system app theme and set app theme based on values
             RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
@@ -65,6 +64,8 @@ namespace AirPodsUI.Configurator
             jsonWatcher.Changed += JsonWatcher_Changed;
 
             jsonWatcher.EnableRaisingEvents = true;
+
+            Show();
         }
 
         private void JsonWatcher_Changed(object sender, FileSystemEventArgs e)
@@ -77,14 +78,23 @@ namespace AirPodsUI.Configurator
             await Task.Delay(500);
 
             // Read json file and add to list
-            jsonFile = PairedDevicesJson.FromJson(File.ReadAllText(Helper.PairedDevicesFile));
-            deviceListBind.Clear();
-            foreach (var i in jsonFile.Devices)
+            try
             {
-                deviceListBind.Add(new DeviceListModel { DeviceName = i.DeviceName, ImageSource = new Uri((i.DeviceType == "Bluetooth") ? "pack://application:,,,/Assets/bluetooth.png" : "pack://application:,,,/Assets/usb.png") });
+                jsonFile = PairedDevicesJson.FromJson(File.ReadAllText(Helper.PairedDevicesFile));
+                deviceListBind.Clear();
+                Devices.Items.Clear();
+                foreach (var i in jsonFile.Devices)
+                {
+                    deviceListBind.Add(new DeviceListModel { DeviceName = i.DeviceName, ImageSource = new Uri((i.DeviceType == "Bluetooth") ? "pack://application:,,,/Assets/bluetooth.png" : "pack://application:,,,/Assets/usb.png") });
+                    Devices.Items.Add(new DeviceListModel { DeviceName = i.DeviceName, ImageSource = new Uri((i.DeviceType == "Bluetooth") ? "pack://application:,,,/Assets/bluetooth.png" : "pack://application:,,,/Assets/usb.png") });
+                }
             }
-            Devices.ItemsSource = deviceListBind;
-
+            catch (Exception)
+            {
+                Helper.Error("Error", "Unable to read PairedDevices.json. Please make sure you have not modified it. If this error still persists, try running as administrator or contact the developer.");
+                deviceListBind.Clear();
+                Devices.Items.Clear();
+            }
         }
 
         private void ShowPairPage(object sender, RoutedEventArgs e)

@@ -23,7 +23,7 @@
                     <MediaElement LoadedBehavior="Manual" x:Name="media" Source="pack://application:,,,/Assets/pro.mp4" Visibility="Hidden" />
                     <Image RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" x:Name="image" Visibility="Hidden" />
                 </Grid>
-                <Button x:Name="done" Content="Done" Margin="10 -20 10 0" Width="250" Background="Gray" Height="50">
+                <Button x:Name="done" Content="Done" Margin="10 -20 10 0" Width="250" Background="Gray" Height="50" Click="done_Click">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="FontSize" Value="18"/>

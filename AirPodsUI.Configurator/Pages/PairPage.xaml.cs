@@ -71,46 +71,80 @@ namespace AirPodsUI.Configurator.Pages
         {
             BtDevices.Items.Clear();
             BluetoothDevices.Clear();
-            DeviceInformationCollection PairedDevices = await DeviceInformation.FindAllAsync(BluetoothDevice.GetDeviceSelectorFromPairingState(true));
-            foreach (var i in PairedDevices)
+            try
             {
-                BluetoothDevices.Add(new BluetoothDevices { DeviceID = i.Id, DeviceName = i.Name, DeviceType = DeviceTypes.Bluetooth });
-                BtDevices.Items.Add($"{i.Name} ({i.Id})");
+                DeviceInformationCollection PairedDevices = await DeviceInformation.FindAllAsync(BluetoothDevice.GetDeviceSelectorFromPairingState(true));
+                foreach (var i in PairedDevices)
+                {
+                    BluetoothDevices.Add(new BluetoothDevices { DeviceID = i.Id, DeviceName = i.Name, DeviceType = DeviceTypes.Bluetooth });
+                    BtDevices.Items.Add($"{i.Name} ({i.Id})");
+                }
+                btName.Text = "";
+
+                if (PairedDevices.Count < 1)
+                {
+                    Helper.Error("Error", "Unable to find any bluetooth devices. Make sure you have paired your devices with this computer before and try again.");
+                }
             }
-            btName.Text = "";
+            catch (Exception)
+            {
+                Helper.Error("Error", "There was a unknown error scanning for bluetooth devices. Contact the developer");
+            }
         }
 
         private void RefreshUSB(object sender, RoutedEventArgs e)
         {
             usbDevices.Items.Clear();
-            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_USBHub");
-
-            foreach (ManagementObject usb in mos.Get())
+            try
             {
-                USBDevices.Add(new USBDevice { DeviceID = usb.Properties["DeviceID"].Value.ToString(), DeviceName = usb.Properties["Description"].Value.ToString(), DeviceType = DeviceTypes.USB });
-                usbDevices.Items.Add($"{usb.Properties["Description"].Value.ToString()} ({usb.Properties["DeviceID"].Value.ToString()})");
+                ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_USBHub");
+
+                foreach (ManagementObject usb in mos.Get())
+                {
+                    USBDevices.Add(new USBDevice { DeviceID = usb.Properties["DeviceID"].Value.ToString(), DeviceName = usb.Properties["Description"].Value.ToString(), DeviceType = DeviceTypes.USB });
+                    usbDevices.Items.Add($"{usb.Properties["Description"].Value.ToString()} ({usb.Properties["DeviceID"].Value.ToString()})");
+                }
+                usbName.Text = "";
             }
-            usbName.Text = "";
+            catch (Exception)
+            {
+                Helper.Error("Error", "There was a error scanning for USB devices. You might want to contact the developer.");
+            }
         }
 
         private void ApplyBT(object sender, RoutedEventArgs e)
         {
-            BluetoothDevices SelectedDevice = BluetoothDevices[BtDevices.SelectedIndex];
-            PairedDevicesJson PairedDevices = PairedDevicesJson.FromJson(File.ReadAllText(Helper.PairedDevicesFile));
-            PairedDevices.Devices.Add(new Device { DeviceAddress = SelectedDevice.DeviceID, DeviceName = btName.Text, DeviceType = "Bluetooth", TemplateLocation = "" });
-            File.WriteAllText(Helper.PairedDevicesFile, PDSerialize.ToJson(PairedDevices));
+            try
+            {
+                BluetoothDevices SelectedDevice = BluetoothDevices[BtDevices.SelectedIndex];
+                PairedDevicesJson PairedDevices = PairedDevicesJson.FromJson(File.ReadAllText(Helper.PairedDevicesFile));
+                PairedDevices.Devices.Add(new Device { DeviceAddress = SelectedDevice.DeviceID, DeviceName = btName.Text, DeviceType = "Bluetooth", TemplateLocation = "" });
+                File.WriteAllText(Helper.PairedDevicesFile, PDSerialize.ToJson(PairedDevices));
 
-            MessageBox.Show("Done!", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Done!", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception)
+            {
+                Helper.Error("Error", "There was a error writing to the PairedDevices.json file. Please contact the developer.");
+            }
         }
 
         private void ApplyUSB(object sender, RoutedEventArgs e)
         {
-            USBDevice SelectedDevice = USBDevices[usbDevices.SelectedIndex];
-            PairedDevicesJson PairedDevices = PairedDevicesJson.FromJson(File.ReadAllText(Helper.PairedDevicesFile));
-            PairedDevices.Devices.Add(new Device { DeviceAddress = SelectedDevice.DeviceID, DeviceName = usbName.Text, DeviceType = "USB", TemplateLocation = "" });
-            File.WriteAllText(Helper.PairedDevicesFile, PDSerialize.ToJson(PairedDevices));
+           try
+            {
+                USBDevice SelectedDevice = USBDevices[usbDevices.SelectedIndex];
+                PairedDevicesJson PairedDevices = PairedDevicesJson.FromJson(File.ReadAllText(Helper.PairedDevicesFile));
+                
+                PairedDevices.Devices.Add(new Device { DeviceAddress = SelectedDevice.DeviceID, DeviceName = usbName.Text, DeviceType = "USB", TemplateLocation = "" });
+                File.WriteAllText(Helper.PairedDevicesFile, PDSerialize.ToJson(PairedDevices));
 
-            MessageBox.Show("Done!", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Done!", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception)
+            {
+                Helper.Error("Error", "There was a error writing to the PairedDevices.json file. Please contact the developer.");
+            }
         }
 
         private void Page_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
