@@ -26,7 +26,11 @@
                             <MenuItem Header="Add" x:Name="add" Click="add_Click"/>
                             <MenuItem Header="Refresh" x:Name="refresh" Click="refresh_Click"/>
                             <MenuItem Header="Duplicate" x:Name="dupe" Click="dupe_Click"/>
-                            <MenuItem Header="New" x:Name="new" Click="new_Click"/>
+                            <MenuItem Header="New" x:Name="new">
+                                <MenuItem Header="Card" x:Name="newCard" Click="newCard_Click"/>
+                                <MenuItem Header="Banner" x:Name="newBanner" Click="newBanner_Click"/>
+                                <MenuItem Header="Pencil" x:Name="newPencil" Click="newPencil_Click"/>
+                            </MenuItem>
                         </ContextMenu>
                     </ListBox.ContextMenu>
                 </ListBox>

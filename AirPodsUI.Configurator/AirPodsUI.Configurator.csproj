@@ -5,6 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyName>AirPodsUI</AssemblyName>
+    <Authors>Lavamaster</Authors>
+    <Company />
+    <Description>Adds AirPods connect UI to Windows!</Description>
+    <PackageProjectUrl>https://github.com/LavamasterYT/AirPodsUI</PackageProjectUrl>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <FileVersion>1.5.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

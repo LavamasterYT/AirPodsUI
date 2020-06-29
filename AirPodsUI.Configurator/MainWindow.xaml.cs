@@ -9,6 +9,8 @@ using AirPodsUI.Configurator.Models;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System.Reflection;
 
 namespace AirPodsUI.Configurator
 {
@@ -64,6 +66,15 @@ namespace AirPodsUI.Configurator
             jsonWatcher.Changed += JsonWatcher_Changed;
 
             jsonWatcher.EnableRaisingEvents = true;
+
+            // Check for updates
+            JObject data = JObject.Parse("https://api.github.com/repos/LavamasterYT/AirPods-for-Windows/releases/latest");
+            Version latest = Version.Parse((string)data.SelectToken("tag_name"));
+            Version current = Assembly.GetExecutingAssembly().GetName().Version;
+            if (current.CompareTo(latest) > 0)
+            {
+                MessageBox.Show("There is a new version available to download! Please go to the project repository to update!", "Notice", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+            }
 
             Show();
         }

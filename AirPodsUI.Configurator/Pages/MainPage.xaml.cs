@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Windows.Controls;
 
 namespace AirPodsUI.Configurator.Pages
 {
@@ -10,6 +13,14 @@ namespace AirPodsUI.Configurator.Pages
         public MainPage()
         {
             InitializeComponent();
+            try
+            {
+                contents.Text = File.ReadAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\README.txt");
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

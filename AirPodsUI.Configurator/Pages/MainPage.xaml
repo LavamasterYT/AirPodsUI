@@ -7,19 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
-    <StackPanel Margin="15 15">
+    <DockPanel LastChildFill="True" Margin="15 15">
         <!-- Read me contents -->
-        <Label FontWeight="Bold" FontSize="24" Content="Welcome to AirPodsUI!"/>
-        <Label Content="Welcome, and thank you for downloading AirPodsUI! If you enjoy this application, tell some friends, family, or colleagues!" FontWeight="Normal" Margin="0 10 0 0"/>
-        <Label Content="I just want to point out a few things:" FontWeight="Normal"/>
-        <Label Content="- All the configuration and stuff are stored in your Documents folder inside AirPodsUI." FontWeight="Normal"/>
-        <Label Content="- I wouldn't suggest messing with anything in the AirPodsUI folder unless adding assets or templates." FontWeight="Normal"/>
-        <Label Content="- If you know a thing or two about C#, feel free to edit the source code to optimize or add stuff!" FontWeight="Normal"/>
-        <Label Content=" " FontWeight="Normal"/>
-        <Label Content="If you have found a bug or something, file a issue on the GitHub repository." FontWeight="Normal"/>
-        <Label Content="If you need help setting this application up or confused on something or just want to talk, contact me!" FontWeight="Normal"/>
-        <Label Content="Reddit: u/LavamasterYT" FontWeight="Normal"/>
-        <Label Content="Discord: Contact me on Reddit for Discord." FontWeight="Normal"/>
-        <Label Content="Project Repository: https://github.com/LavamasterYT/AirPodsUI" FontWeight="Normal" />
-    </StackPanel>
+        <Label FontWeight="Bold" FontSize="24" Content="Welcome to AirPodsUI!" DockPanel.Dock="Top" Margin="0 10"/>
+        <TextBox IsEnabled="False" x:Name="contents"/>
+    </DockPanel>
 </Page>
