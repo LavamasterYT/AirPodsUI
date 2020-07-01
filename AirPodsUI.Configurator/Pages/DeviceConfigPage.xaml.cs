@@ -202,5 +202,154 @@ namespace AirPodsUI.Configurator.Pages
                 Helper.Error("Error", "Unable to create new template.");
             }
         }
+
+        private void ShowPreview(PencilConfig config)
+        {
+            // Set colors and text
+            pencilBack.Background = config.Background.ToBrush();
+            pDevIcon.Source = new BitmapImage(new Uri(config.IconLocation, UriKind.RelativeOrAbsolute));
+            pDevName.Content = config.StaticName;
+            pDevName.Foreground = config.DeviceNameTextForeground.ToBrush();
+            pDevStatus.Content = config.StatusText;
+            pDevStatus.Foreground = config.StatusTextForeground.ToBrush();
+
+            pencilBack.Visibility = Visibility.Visible;
+            cTint.Visibility = Visibility.Hidden;
+            banner.Visibility = Visibility.Hidden;
+        }
+
+        private void ShowPreview(NotificationConfig config)
+        {
+            bBack.Background = config.Background.ToBrush();
+            bIcon.Source = new BitmapImage(new Uri(config.IconLocation));
+            bAppName.Content = config.AppName;
+            bAppName.Foreground = config.AppNameColor.ToBrush();
+            bAppDate.Foreground = config.AppNameColor.ToBrush();
+            bCaption.Content = config.StaticName;
+            bCaption.Foreground = config.CaptionForeground.ToBrush();
+            bStatus.Content = config.StatusText;
+            bStatus.Foreground = config.StatusTextForeground.ToBrush();
+
+            pencilBack.Visibility = Visibility.Hidden;
+            cTint.Visibility = Visibility.Hidden;
+            banner.Visibility = Visibility.Visible;
+        }
+
+        private void ShowPreview(CardConfig config)
+        {
+            bool loop = bool.Parse(config.Loop);
+
+            // Try for image
+            bool isImage = false;
+
+            string ext = System.IO.Path.GetExtension(config.MediaLocation);
+            if (config.MediaLocation.StartsWith("pack://application:,,,/Assets/"))
+            {
+                Stream stream = Application.GetResourceStream(new Uri(config.MediaLocation)).Stream;
+
+                Directory.CreateDirectory(System.IO.Path.GetTempPath() + "\\AirPodsUI\\Assets\\");
+
+                using (FileStream file = new FileStream(System.IO.Path.GetTempPath() + "\\AirPodsUI\\Assets\\file" + ext, FileMode.Create))
+                {
+                    stream.CopyTo(file);
+                }
+
+                config.MediaLocation = System.IO.Path.GetTempPath() + "\\AirPodsUI\\Assets\\file" + ext;
+            }
+
+            try
+            {
+                System.Drawing.Image.FromFile(config.MediaLocation);
+                isImage = true;
+            }
+            catch (OutOfMemoryException)
+            {
+                isImage = false;
+            }
+
+            if (config.StretchMode == "None")
+            {
+                cImage.Stretch = Stretch.None;
+                cMedia.Stretch = Stretch.None;
+            }
+            if (config.StretchMode == "Fill")
+            {
+                cImage.Stretch = Stretch.Fill;
+                cMedia.Stretch = Stretch.Fill;
+            }
+            if (config.StretchMode == "UniformToFill")
+            {
+                cImage.Stretch = Stretch.UniformToFill;
+                cMedia.Stretch = Stretch.UniformToFill;
+            }
+            if (config.StretchMode == "Uniform")
+            {
+                cImage.Stretch = Stretch.Uniform;
+                cMedia.Stretch = Stretch.Uniform;
+            }
+
+            if (isImage)
+            {
+                cImage.Source = new BitmapImage(new Uri(config.MediaLocation));
+                cImage.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cMedia.Source = new Uri(config.MediaLocation);
+                cMedia.Play();
+                cMedia.Visibility = Visibility.Visible;
+                if (loop)
+                    cMedia.MediaEnded += Media_MediaEnded;
+            }
+
+            if (config.Tint != "")
+                cTint.Background = config.Tint.ToBrush();
+
+            cBack.Background = config.Background.ToBrush();
+            cDevName.Content = config.StaticName;
+            cDevName.Foreground = config.NameForeground.ToBrush();
+            cMedia.Source = new Uri(config.MediaLocation);
+            cDoneBtn.Content = config.ButtonText;
+            cDoneBtn.Background = config.ButtonBackground.ToBrush();
+            cDoneBtn.Foreground = config.ButtonForeground.ToBrush();
+
+            pencilBack.Visibility = Visibility.Hidden;
+            cTint.Visibility = Visibility.Visible;
+            banner.Visibility = Visibility.Hidden;
+        }
+
+        private void Media_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            cMedia.Position = TimeSpan.Zero;
+            cMedia.Play();
+        }
+
+        private void Templates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cMedia.Source = null;
+            if (Templates.SelectedIndex < 0)
+                return;
+
+            this.Dispatcher.Invoke(() =>
+            {
+                switch (System.IO.Path.GetExtension(Configuration.Keys.ToArray()[Templates.SelectedIndex]).ToLower())
+                {
+                    case ".pencil":
+                        ShowPreview((PencilConfig)Configuration[Configuration.Keys.ToArray()[Templates.SelectedIndex]]);
+                        break;
+                    case ".notif":
+                        ShowPreview((NotificationConfig)Configuration[Configuration.Keys.ToArray()[Templates.SelectedIndex]]);
+                        break;
+                    case ".card":
+                        ShowPreview((CardConfig)Configuration[Configuration.Keys.ToArray()[Templates.SelectedIndex]]);
+                        break;
+                    default:
+                        pencilBack.Visibility = Visibility.Hidden;
+                        cTint.Visibility = Visibility.Hidden;
+                        banner.Visibility = Visibility.Hidden;
+                        break;
+                }
+            });
+        }
     }
 }

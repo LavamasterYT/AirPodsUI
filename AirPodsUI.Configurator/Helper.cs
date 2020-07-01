@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -33,6 +35,11 @@ namespace AirPodsUI.Configurator
         /// Get the AirPodsUI folder
         /// </summary>
         public static string AirPodsUIFolder { get; set; } = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\AirPodsUI\\";
+        
+        /// <summary>
+        /// The executing app directory
+        /// </summary>
+        public static string AppDirectory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
         /// Get the PairedDevices.json file
@@ -55,6 +62,9 @@ namespace AirPodsUI.Configurator
         public static string LogsFolder { get; set; } = $"{AirPodsUIFolder}Logs";
 
         private static string numberPattern = " ({0})";
+
+        public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> self)
+   => self.Select((item, index) => (item, index));
 
         public static string NextAvailableFilename(string path)
         {

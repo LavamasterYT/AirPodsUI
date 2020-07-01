@@ -2,6 +2,10 @@
   "profiles": {
     "AirPodsUI.Configurator": {
       "commandName": "Project"
+    },
+    "AirPodsUI.Configurator.Args": {
+      "commandName": "Project",
+      "commandLineArgs": "test.notif airpods"
     }
   }
 }

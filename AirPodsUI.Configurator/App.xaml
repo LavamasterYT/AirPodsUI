@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:AirPodsUI.Configurator"
              xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
              Startup="Application_Startup">
     <Application.Resources>
         <!-- Add AdonisUI control schemes -->
@@ -11,6 +12,9 @@
                 <ResourceDictionary Source="pack://application:,,,/AdonisUI;component/ColorSchemes/Dark.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/AdonisUI.ClassicTheme;component/Resources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="{x:Static adonisUi:Brushes.AccentBrush}" Color="{x:Static SystemParameters.WindowGlassColor}"/>
+            <Color x:Key="{x:Static adonisUi:Colors.AccentColor}" R="255" B="0" G="0" A="255"></Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

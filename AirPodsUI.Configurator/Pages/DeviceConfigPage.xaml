@@ -19,7 +19,7 @@
 
             <DockPanel LastChildFill="True" Margin="10 10" Grid.Column="0">
                 <Label DockPanel.Dock="Top" Content="Templates:"/>
-                <ListBox x:Name="Templates" BorderBrush="Gray" BorderThickness="1" Margin="0 10">
+                <ListBox x:Name="Templates" BorderBrush="Gray" BorderThickness="1" Margin="0 10" SelectionChanged="Templates_SelectionChanged">
                     <ListBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Remove" x:Name="remove" Click="remove_Click"/>
@@ -38,7 +38,61 @@
 
             <Border Grid.Column="1" Margin="10 10" CornerRadius="10" a:LayerExtension.Layer="2">
                 <GroupBox x:Name="selectTemplatePreview">
-                    
+                    <Grid>
+                        <!--Pencil-->
+                        <Border CornerRadius="30" Background="#252525" x:Name="pencilBack" VerticalAlignment="Center" HorizontalAlignment="Center" Width="220" Height="60" Visibility="Hidden">
+                            <Grid>
+                                <Image x:Name="pDevIcon" RenderOptions.BitmapScalingMode="HighQuality" Source="pack://application:,,,/Assets/AirPods.png" Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20 0"/>
+                                <Label x:Name="pDevName" Content="Jose's AirPods" FontFamily="pack://application:,,,/Fonts/#SF Pro Display Semibold" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" Margin="0 10" FontSize="18"/>
+                                <Label x:Name="pDevStatus" Content="Connected" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="pack://application:,,,/Fonts/#SF Pro Display Semibold" Foreground="DarkGray" FontSize="14" Margin="0 20 0 0"/>
+                            </Grid>
+                        </Border>
+
+                        <!--Banner-->
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" Visibility="Hidden" x:Name="banner">
+                            <Border CornerRadius="15" x:Name="bBack" Background="#EF202020" Width="450" Height="90" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <DockPanel Margin="0 10">
+                                    <DockPanel LastChildFill="False" DockPanel.Dock="Top" Margin="15 0">
+                                        <Image x:Name="bIcon" Source="pack://application:,,,/Assets/AirPods.png" Height="20" Width="20" DockPanel.Dock="Left" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <Label x:Name="bAppName" Content="AIRPODSUI" FontFamily="pack://applicaton:,,,/Fonts/#SF Pro Display Regular" Foreground="Gray" FontWeight="Normal" FontSize="14" VerticalAlignment="Center" Margin="5 0" />
+                                        <Label Content="now" x:Name="bAppDate" FontFamily="pack://applicaton:,,,/Fonts/#SF Pro Display Regular" Foreground="Gray" FontWeight="Normal" FontSize="14" VerticalAlignment="Center" DockPanel.Dock="Right"/>
+                                    </DockPanel>
+                                    <Label x:Name="bCaption" Margin="15 5" FontFamily="pack://applicaton:,,,/Fonts/#SF Pro Display Semibold" Content="Jose's AirPods" FontWeight="SemiBold" FontSize="18" DockPanel.Dock="Top" />
+                                    <Label x:Name="bStatus" Margin="15 -2.5" FontFamily="pack://applicaton:,,,/Fonts/#SF Pro Display Normal" Content="Connected" FontWeight="Light" FontSize="16" DockPanel.Dock="Bottom" />
+                                </DockPanel>
+                            </Border>
+                        </ScrollViewer>
+                        
+                        <!--Card-->
+                        <Grid x:Name="cTint" Visibility="Hidden">
+                            <Border Opacity="1" Background="White" CornerRadius="25" x:Name="cBack" Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <DockPanel>
+                                    <Label HorizontalAlignment="Center" DockPanel.Dock="Top" Content="AirPods" FontSize="28" Margin="0 20 0 0" x:Name="cDevName" Foreground="Black" FontFamily="pack://application:,,,/Fonts/#SF Pro Display Regular" />
+                                    <Grid Width="250" Height="175" DockPanel.Dock="Top">
+                                        <MediaElement LoadedBehavior="Manual" x:Name="cMedia" Source="pack://application:,,,/Assets/pro.mp4" Visibility="Hidden" />
+                                        <Image RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" x:Name="cImage" Visibility="Hidden" />
+                                    </Grid>
+                                    <Button x:Name="cDoneBtn" Content="Done" Margin="10 -20 10 0" Width="250" Background="Gray" Height="50" >
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Setter Property="FontSize" Value="18"/>
+                                                <Setter Property="FontFamily" Value="pack://application:,,,/Fonts/#SF Pro Display Semibold" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DockPanel>
+                            </Border>
+                        </Grid>
+                    </Grid>
                 </GroupBox>
             </Border>
 

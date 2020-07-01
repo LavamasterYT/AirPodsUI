@@ -22,7 +22,7 @@
 
         public string MediaLocation { get; set; } = "pack://application:,,,/Assets/pro.mp4";
 
-        public string StretchMode { get; set; } = "None";
+        public string StretchMode { get; set; } = "Uniform";
 
         public string TimeOut { get; set; } = "5000";
 

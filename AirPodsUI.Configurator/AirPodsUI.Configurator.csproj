@@ -37,6 +37,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="RegistryUtils">
+      <HintPath>..\..\..\..\Downloads\RegistryUtils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\AirPods.png" />
     <Resource Include="Assets\bluetooth.png" />
     <Resource Include="Assets\pro.mp4" />

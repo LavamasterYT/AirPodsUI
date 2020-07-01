@@ -9,8 +9,10 @@ using AirPodsUI.Configurator.Models;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using System.Reflection;
+using System.Diagnostics;
+using RegistryUtils;
+using Windows.Security.Authentication.Identity.Core;
+using Serilog;
 
 namespace AirPodsUI.Configurator
 {
@@ -24,34 +26,27 @@ namespace AirPodsUI.Configurator
 
         List<DeviceListModel> deviceListBind { get; set; }
 
+        RegistryMonitor monitor;
+        bool changed = false;
+
         public MainWindow()
         {
             InitializeComponent();
 
             // Set the page to the read me 
             MainFrame.NavigationService.Navigate(new MainPage());
+            Log.Information("Loading read me...");
 
+            Log.Information("Getting Windows 10 version.");
             if (int.Parse(Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion").GetValue("ReleaseId").ToString()) < 1903)
             {
+                Log.Error("Windows version is unsupported.");
                 MessageBox.Show("This program detects that you are running a version of Windows that is not supported by this program. Please update to the latest version in order to continue.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 Environment.Exit(0);
             }
 
-            // Get system app theme and set app theme based on values
-            RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-            if (int.TryParse(reg.GetValue("AppsUseLightTheme").ToString(), out int result))
-            {
-                if (result == 0)
-                {
-                    TitleBarBackground = System.Windows.Media.Brushes.Black;
-                    ResourceLocator.SetColorScheme(Application.Current.Resources, ResourceLocator.DarkColorScheme);
-                }
-                else
-                {
-                    TitleBarBackground = System.Windows.Media.Brushes.White;
-                    ResourceLocator.SetColorScheme(Application.Current.Resources, ResourceLocator.LightColorScheme);
-                }
-            }
+            Log.Information("Changing theme.");
+            ChangeTheme();
 
             deviceListBind = new List<DeviceListModel>();
             jsonWatcher = new FileSystemWatcher();
@@ -59,28 +54,68 @@ namespace AirPodsUI.Configurator
             this.Dispatcher.Invoke(RefreshDeviceList);
 
             // Watch for changes to the JSON file to refresh the list
+            Log.Information("Subscribing to FileWatcher.");
             jsonWatcher.Path = Helper.AirPodsUIFolder;
             jsonWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.LastAccess;
             jsonWatcher.Filter = "*.json";
-
             jsonWatcher.Changed += JsonWatcher_Changed;
-
             jsonWatcher.EnableRaisingEvents = true;
 
-            // Check for updates
-            JObject data = JObject.Parse("https://api.github.com/repos/LavamasterYT/AirPods-for-Windows/releases/latest");
-            Version latest = Version.Parse((string)data.SelectToken("tag_name"));
-            Version current = Assembly.GetExecutingAssembly().GetName().Version;
-            if (current.CompareTo(latest) > 0)
-            {
-                MessageBox.Show("There is a new version available to download! Please go to the project repository to update!", "Notice", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-            }
+            // Watch for changes in theme
+            Log.Information("Watching for registry changes.");
+            monitor = new RegistryMonitor(RegistryHive.CurrentUser, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+            monitor.RegChanged += Monitor_RegChanged;
+            monitor.RegChangeNotifyFilter = RegChangeNotifyFilter.Value;
+            monitor.Start();
 
+            Log.Information("Showing main window.");
             Show();
+        }
+
+        private void Monitor_RegChanged(object sender, EventArgs e)
+        {
+            Log.Information("Changing theme because registry changed.");
+            if (!changed)
+            {
+                changed = true;
+            }
+            else
+            {
+                changed = false;
+                ChangeTheme();
+            }
+        }
+
+        private void ChangeTheme()
+        {
+            this.Dispatcher.Invoke(() => 
+            {
+                // Get system app theme and set app theme based on values
+                RegistryKey reg = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+                if (int.TryParse(reg.GetValue("AppsUseLightTheme").ToString(), out int result))
+                {
+                    Log.Information("Got selected theme from user, applying.");
+                    if (result == 0)
+                    {
+                        Log.Information("Applying dark mode.");
+                        TitleBarBackground = System.Windows.Media.Brushes.Black;
+                        ResourceLocator.SetColorScheme(Application.Current.Resources, ResourceLocator.DarkColorScheme);
+                    }
+                    else
+                    {
+                        Log.Information("Applying light mode.");
+                        TitleBarBackground = System.Windows.Media.Brushes.White;
+                        ResourceLocator.SetColorScheme(Application.Current.Resources, ResourceLocator.LightColorScheme);
+                    }
+                }
+                reg.Close();
+                reg.Dispose();
+            });
         }
 
         private void JsonWatcher_Changed(object sender, FileSystemEventArgs e)
         {
+            Log.Information("JSON file changed, refreshing device list.");
             this.Dispatcher.Invoke(RefreshDeviceList);
         }
         private async void RefreshDeviceList()
@@ -91,17 +126,20 @@ namespace AirPodsUI.Configurator
             // Read json file and add to list
             try
             {
+                Log.Information("Reading information from PairedDevices.json");
                 jsonFile = PairedDevicesJson.FromJson(File.ReadAllText(Helper.PairedDevicesFile));
                 deviceListBind.Clear();
                 Devices.Items.Clear();
                 foreach (var i in jsonFile.Devices)
                 {
+                    Log.Information($"Adding {i.DeviceName} to the list.");
                     deviceListBind.Add(new DeviceListModel { DeviceName = i.DeviceName, ImageSource = new Uri((i.DeviceType == "Bluetooth") ? "pack://application:,,,/Assets/bluetooth.png" : "pack://application:,,,/Assets/usb.png") });
                     Devices.Items.Add(new DeviceListModel { DeviceName = i.DeviceName, ImageSource = new Uri((i.DeviceType == "Bluetooth") ? "pack://application:,,,/Assets/bluetooth.png" : "pack://application:,,,/Assets/usb.png") });
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Log.Error(e, "An error has occured trying to refresh device list.");
                 Helper.Error("Error", "Unable to read PairedDevices.json. Please make sure you have not modified it. If this error still persists, try running as administrator or contact the developer.");
                 deviceListBind.Clear();
                 Devices.Items.Clear();
@@ -122,6 +160,24 @@ namespace AirPodsUI.Configurator
             }
 
             MainFrame.NavigationService.Navigate(new DeviceConfigPage(jsonFile, Devices.SelectedIndex));
+        }
+
+        private void StartServiceBtn(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start($"{Helper.AppDirectory}\\AirPodsUI.Configurator.exe");
+            }
+            catch (Exception)
+            {
+                Helper.Error("Error", "Unable to start service.");
+            }
+        }
+
+        private void AdonisWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            monitor.Stop();
+            monitor.Dispose();
         }
     }
 }

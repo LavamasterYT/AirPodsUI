@@ -6,6 +6,7 @@
         Title="AirPodsUI Configurator 0.5a1 (Unstable)"
         TitleBarBackground="Black"
         Height="530"
+        Closing="AdonisWindow_Closing"
         Width="950"
         MinWidth="1000"
         MinHeight="530">
@@ -24,7 +25,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button x:Name="StartService" Content="Start Service" Height="25" DockPanel.Dock="Bottom"/>
+            <Button x:Name="StartService" Content="Start Service" Height="25" DockPanel.Dock="Bottom" Click="StartServiceBtn"/>
             <Button x:Name="AddDevice" Content="Add Device" Height="25" DockPanel.Dock="Bottom" Margin="0 5" Click="ShowPairPage"/>
         </DockPanel>
         
