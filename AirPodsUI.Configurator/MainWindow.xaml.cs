@@ -148,11 +148,13 @@ namespace AirPodsUI.Configurator
 
         private void ShowPairPage(object sender, RoutedEventArgs e)
         {
+            Log.Information("Going to the pair page.");
             MainFrame.NavigationService.Navigate(new PairPage());
         }
 
         private void DevicesIndexChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            Log.Information("User has selected a device.");
             if (Devices.SelectedIndex < 0)
             {
                 MainFrame.NavigationService.Navigate(new MainPage());
@@ -166,16 +168,20 @@ namespace AirPodsUI.Configurator
         {
             try
             {
+                Log.Information("Stating the AirPodsUI service.");
                 Process.Start($"{Helper.AppDirectory}\\AirPodsUI.Configurator.exe");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "We couldnt start the damn service what a shame.");
                 Helper.Error("Error", "Unable to start service.");
             }
         }
 
         private void AdonisWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Log.Information("Sucks to have you go, have a great day!");
+            Log.CloseAndFlush();
             monitor.Stop();
             monitor.Dispose();
         }

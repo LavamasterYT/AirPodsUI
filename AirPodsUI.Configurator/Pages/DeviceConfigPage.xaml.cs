@@ -1,6 +1,7 @@
 ﻿using AirPodsUI.Configurator.Cards;
 using AirPodsUI.Configurator.Configuration;
 using Microsoft.Win32;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,22 +30,25 @@ namespace AirPodsUI.Configurator.Pages
 
         public DeviceConfigPage(PairedDevicesJson json, int selectedIndex)
         {
+            Log.Information("Loading window with " + json.Devices[selectedIndex].DeviceName);
             InitializeComponent();
             Configuration = new Dictionary<string, object>();
             this.json = json;
             currentDev = selectedIndex;
             refresh_Click(this, new RoutedEventArgs());
             DevName.Content = json.Devices[selectedIndex].DeviceName + " settings";
+            Log.Information("Loaded window.");
         }
 
         private void remove_Click(object sender, RoutedEventArgs e)
         {
+            Log.Information("Removing device.");
             try
             {
                 File.Delete(Configuration.Keys.ToArray()[Templates.SelectedIndex]);
                 refresh_Click(sender, e);
             }
-            catch (Exception)
+            catch (Exception el)
             {
                 Helper.Error("Error", "Unable to remove file.");
             }

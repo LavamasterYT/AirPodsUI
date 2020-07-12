@@ -26,7 +26,7 @@ namespace AirPodsUI.Configurator
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Log.Logger = new LoggerConfiguration().WriteTo.Console().WriteTo.File($"{Helper.LogsFolder}\\AirPodsUI-{DateTime.Now:MM-dd-yyy hh-mm-ss-ff}.txt").CreateLogger();
-            Log.Information("Created logger, checking necessary directories.");
+            Log.Information("I don't know proper ways to log info, im just gonna log information on every little thing lol");
 
             try
             {
@@ -73,7 +73,7 @@ namespace AirPodsUI.Configurator
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "We couldn't convert a template or something went wrong idk.");
+                Log.Warning(ex, "We couldn't convert a template or something went wrong idk.");
                 Helper.Error("Error", "Unable to check necessary directories/files. The program might not work correctly.");
             }
 

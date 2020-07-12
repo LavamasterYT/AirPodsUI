@@ -1,5 +1,6 @@
 ﻿using AirPodsUI.Configurator.Cards;
 using AirPodsUI.Configurator.Configuration;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +12,7 @@ namespace AirPodsUI.Configurator
     {
         public static void Parse(string[] args)
         {
+            Log.Information($"Got args {args[0]} and {args[1]}");
             string ext = Path.GetExtension(args[0]).ToLower();
 
             if (ext == ".pencil")
@@ -33,6 +35,10 @@ namespace AirPodsUI.Configurator
                 if (string.IsNullOrEmpty(config.StaticName))
                     config.StaticName = args[1];
                 new Card(config).Show();
+            }
+            else
+            {
+                new MainWindow();
             }
         }
     }
