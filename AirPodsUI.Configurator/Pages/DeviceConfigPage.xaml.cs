@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,7 @@ namespace AirPodsUI.Configurator.Pages
             }
             catch (Exception el)
             {
+                Log.Error(el, "Error removing the file!");
                 Helper.Error("Error", "Unable to remove file.");
             }
         }
@@ -66,8 +68,9 @@ namespace AirPodsUI.Configurator.Pages
                     refresh_Click(sender, e);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Error has occurred adding template.");
                 Helper.Error("Error", "Unable to add template.");
             }
         }
