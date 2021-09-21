@@ -1,0 +1,30 @@
+﻿<Page x:Class="AirPodsUI.Settings.Pages.TraySettings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      Loaded="OnPageLoaded"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Tray Settings">
+
+    <ui:SimpleStackPanel Spacing="10">
+        <Label Content="Tray Settings" FontSize="24" Margin="0 0 0 10"/>
+        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="10">
+            <Label VerticalAlignment="Center" Content="Refresh Rate:" ToolTip="The delay in ms that checks for new devices that are connected"/>
+            <TextBox x:Name="sRefreshRate" VerticalAlignment="Center" Width="90"/>
+        </ui:SimpleStackPanel>
+        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="10">
+            <Label VerticalAlignment="Center" Content="Y Offset (px):"/>
+            <TextBox x:Name="sOffset" VerticalAlignment="Center" Width="90"/>
+        </ui:SimpleStackPanel>
+        <CheckBox x:Name="sRunAtStartup" Content="Run service at startup"/>
+        <CheckBox x:Name="sAllowEditing" Content="Allow device ID editing"/>
+
+        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="10">
+            <Button Width="75" Content="Apply" Click="OnApplyClicked"/>
+            <Button Width="150" Content="Restart Service" Click="OnRestartClicked"/>
+        </ui:SimpleStackPanel>
+    </ui:SimpleStackPanel>
+</Page>

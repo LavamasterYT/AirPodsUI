@@ -1,0 +1,124 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Fonts\SF-Pro-Display-Black.otf" />
+    <None Remove="Fonts\SF-Pro-Display-BlackItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Bold.otf" />
+    <None Remove="Fonts\SF-Pro-Display-BoldItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Heavy.otf" />
+    <None Remove="Fonts\SF-Pro-Display-HeavyItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Light.otf" />
+    <None Remove="Fonts\SF-Pro-Display-LightItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Medium.otf" />
+    <None Remove="Fonts\SF-Pro-Display-MediumItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Regular.otf" />
+    <None Remove="Fonts\SF-Pro-Display-RegularItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Semibold.otf" />
+    <None Remove="Fonts\SF-Pro-Display-SemiboldItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Thin.otf" />
+    <None Remove="Fonts\SF-Pro-Display-ThinItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Display-Ultralight.otf" />
+    <None Remove="Fonts\SF-Pro-Display-UltralightItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Italic.ttf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Black.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Bold.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Heavy.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Light.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Medium.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Regular.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Semibold.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Thin.otf" />
+    <None Remove="Fonts\SF-Pro-Rounded-Ultralight.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Black.otf" />
+    <None Remove="Fonts\SF-Pro-Text-BlackItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Bold.otf" />
+    <None Remove="Fonts\SF-Pro-Text-BoldItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Heavy.otf" />
+    <None Remove="Fonts\SF-Pro-Text-HeavyItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Light.otf" />
+    <None Remove="Fonts\SF-Pro-Text-LightItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Medium.otf" />
+    <None Remove="Fonts\SF-Pro-Text-MediumItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Regular.otf" />
+    <None Remove="Fonts\SF-Pro-Text-RegularItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Semibold.otf" />
+    <None Remove="Fonts\SF-Pro-Text-SemiboldItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Thin.otf" />
+    <None Remove="Fonts\SF-Pro-Text-ThinItalic.otf" />
+    <None Remove="Fonts\SF-Pro-Text-Ultralight.otf" />
+    <None Remove="Fonts\SF-Pro-Text-UltralightItalic.otf" />
+    <None Remove="Fonts\SF-Pro.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Fonts\SF-Pro-Display-Black.otf" />
+    <Content Include="Fonts\SF-Pro-Display-BlackItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Bold.otf" />
+    <Content Include="Fonts\SF-Pro-Display-BoldItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Heavy.otf" />
+    <Content Include="Fonts\SF-Pro-Display-HeavyItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Light.otf" />
+    <Content Include="Fonts\SF-Pro-Display-LightItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Medium.otf" />
+    <Content Include="Fonts\SF-Pro-Display-MediumItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Regular.otf" />
+    <Content Include="Fonts\SF-Pro-Display-RegularItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Semibold.otf" />
+    <Content Include="Fonts\SF-Pro-Display-SemiboldItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Thin.otf" />
+    <Content Include="Fonts\SF-Pro-Display-ThinItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Display-Ultralight.otf" />
+    <Content Include="Fonts\SF-Pro-Display-UltralightItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Italic.ttf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Black.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Bold.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Heavy.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Light.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Medium.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Regular.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Semibold.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Thin.otf" />
+    <Content Include="Fonts\SF-Pro-Rounded-Ultralight.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Black.otf" />
+    <Content Include="Fonts\SF-Pro-Text-BlackItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Bold.otf" />
+    <Content Include="Fonts\SF-Pro-Text-BoldItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Heavy.otf" />
+    <Content Include="Fonts\SF-Pro-Text-HeavyItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Light.otf" />
+    <Content Include="Fonts\SF-Pro-Text-LightItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Medium.otf" />
+    <Content Include="Fonts\SF-Pro-Text-MediumItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Regular.otf" />
+    <Content Include="Fonts\SF-Pro-Text-RegularItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Semibold.otf" />
+    <Content Include="Fonts\SF-Pro-Text-SemiboldItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Thin.otf" />
+    <Content Include="Fonts\SF-Pro-Text-ThinItalic.otf" />
+    <Content Include="Fonts\SF-Pro-Text-Ultralight.otf" />
+    <Content Include="Fonts\SF-Pro-Text-UltralightItalic.otf" />
+    <Content Include="Fonts\SF-Pro.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\bt_dark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\bt_light.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\usb_dark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\usb_light.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

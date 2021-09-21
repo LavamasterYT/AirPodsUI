@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ToastUI": {
+      "commandName": "Project",
+      "commandLineArgs": "--offset 60 --name \"Xbox Wireless Controller\" --type bt --dark-mode"
+    }
+  }
+}

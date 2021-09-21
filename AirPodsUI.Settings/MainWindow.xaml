@@ -1,0 +1,48 @@
+﻿<Window x:Class="AirPodsUI.Settings.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Loaded="OnWindowLoaded"
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        ui:ThemeManager.IsThemeAware="True"
+        Title="AirPodsUI Settings" Height="620" Width="1030">
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <ui:NavigationView DockPanel.Dock="Left" IsSettingsVisible="False"
+                               PaneDisplayMode="Left"
+                               PaneTitle="Settings"
+                               IsPaneToggleButtonVisible="False"
+                               SelectionChanged="OnNavViewChanged"
+                               IsBackButtonVisible="Collapsed">
+                <ui:NavigationView.MenuItems>
+                    <ui:NavigationViewItem Content="Tray Settings" Tag="tray_settings" Icon="Setting" IsSelected="True"/>
+                    <ui:NavigationViewItem Tag="pnp_devices" x:Name="sPNPDevices" Content="Devices" IsExpanded="True" IsSelected="True">
+                        <ui:NavigationViewItem.MenuItems>
+                            <ui:NavigationViewItem Tag="add_device" Content="Add Device">
+                                <ui:NavigationViewItem.Icon>
+                                    <ui:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                                </ui:NavigationViewItem.Icon>
+                            </ui:NavigationViewItem>
+                        </ui:NavigationViewItem.MenuItems>
+                        <ui:NavigationViewItem.Icon>
+                            <ui:FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE772;"/>
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
+                </ui:NavigationView.MenuItems>
+            </ui:NavigationView>
+
+            <Grid DockPanel.Dock="Right" Margin="25 45 0 20">
+                <ui:Frame x:Name="sPageFrame" NavigationUIVisibility="Hidden">
+                    <ui:Frame.ContentTransitions>
+                        <ui:TransitionCollection>
+                            <ui:NavigationThemeTransition />
+                        </ui:TransitionCollection>
+                    </ui:Frame.ContentTransitions>
+                </ui:Frame>
+            </Grid>
+        </DockPanel>
+
+        <Label Content="AirPodsUI Settings" FontSize="11" Margin="10 7" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
