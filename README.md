@@ -1,20 +1,24 @@
 # AirPodsUI
-AirPods pop up and animation for Windows!
+AirPodsUI adds the banners and toasts from iOS, macOS, and iPadOS to Windows! This includes the pencil looking banner, the pop-up card, and more! It will soon be customizable, allowing you to change the colors, icons, maybe fonts, and more.
 
-## What's this?
-This adds the AirPods pop up from iOS and (new) the pill looking pop up from iOS 14!
+## Features
+Some of the main features include:
 
-## Features?
-Apart from adding the pop up and the Apple Pencil looking pop up, this has many more customization options:
+- Pairing any device, including weird ones like PCIe, ACPI, etc
+- Customizable banners and pop-ups
+- Good looking UI
+- Flexibility
+- And probably more
 
-- Change background and foreground color
-- Custom device name text or button text
-- Custom animation/image/icon
-- Multiple devices
-- USB support
-- And more (putting this here in case i missed something)
+## Downloads
+Currently, there are no downloads (see the next section), so the current way to test it out is to clone the repository and compiling it yourself. Until it is stable enough to release a beta, I will provide a setup file to download
 
-## ETA?
-Soon, I don't have a exact release as I plan to rewrite the old one (yes again) for a couple of reasons:
-1. I lost the source code for the old version before I was able to commit (i learned from my mistakes now lol)
-2. I want to add a new UI which would not be possible on the old one.
+## History
+This project started out back in November of 2019 as a proof of concept. It originally added just the card that pop-ups when you open your AirPods on your phone. I posted it on r/airpods on Reddit where it gained some attenion, enough for me to continue to work on it. In April, I released an improved version that was much quicker than the previous version (it used to take like 20 seconds from when you open your airpods to the pop up to literally as soon as windows connects to it). After that I made some minor improvements, UI changes, etc and then took a long break (I was unmotivated to work on it). It wasn't until mid-September where I decided to pick up on it because I was bored and here we are.
+
+## Support
+For support, just create an issue and describe the problem as best as you can, and provide logs (whenever the beta or something releases) located in "Documents/AirPodsUI/logs/<latest>.log". I won't respond to my DMs anymore on Reddit or others for support, only here on GitHub issues. I am sorry if you have recently tried to reach out to me and ignored you, I have been inactive lately and forgot how my code works lol.
+
+## Credits
+- [ModernWpf](https://github.com/Kinnara/ModernWpf)
+- [Apple San Fransisco Font](https://developer.apple.com/fonts/)
