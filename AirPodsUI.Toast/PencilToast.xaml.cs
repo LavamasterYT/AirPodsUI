@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace AirPodsUI.Toast
@@ -29,17 +29,11 @@ namespace AirPodsUI.Toast
             {
                 tToast.Background = (Brush)converter.ConvertFromString("#252525");
                 tDeviceName.Foreground = (Brush)converter.ConvertFromString("#DDDDDD");
-                if (settings.Device == DeviceType.USB)
-                    tIcon.Source = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\Images\\usb_dark.png"));
-                else
-                    tIcon.Source = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\Images\\bt_dark.png"));
+                tIcon.Source = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\Images\\usb_dark.png"));
             }
             else
             {
-                if (settings.Device == DeviceType.USB)
-                    tIcon.Source = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\Images\\usb_light.png"));
-                else
-                    tIcon.Source = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\Images\\bt_light.png"));
+                tIcon.Source = new BitmapImage(new Uri($"{AppDomain.CurrentDomain.BaseDirectory}\\Images\\usb_light.png"));
             }
 
             for (float i = 0; i < 1; i += 0.05f)

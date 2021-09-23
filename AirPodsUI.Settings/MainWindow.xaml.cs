@@ -1,20 +1,9 @@
-﻿using AirPodsUI.Settings.Pages;
-using ModernWpf.Controls;
-using ModernWpf.Media.Animation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using AirPodsUI.Core;
+using ModernWpf.Controls;
+using AirPodsUI.Settings.Pages;
+using ModernWpf.Media.Animation;
 
 namespace AirPodsUI.Settings
 {
@@ -33,6 +22,8 @@ namespace AirPodsUI.Settings
 
         private void RefreshDevices()
         {
+            Logger.Log(LogType.Information, "Refreshing devices");
+
             while (sPNPDevices.MenuItems.Count > 1)
             {
                 sPNPDevices.MenuItems.RemoveAt(0);
@@ -56,12 +47,17 @@ namespace AirPodsUI.Settings
         {
             try
             {
+                Logger.Log(LogType.Information, "Changing pages from navigation view");
+
                 string tag = ((NavigationViewItem)args.SelectedItem).Tag.ToString();
                 DeviceSettings.ID = tag;
 
                 sPageFrame.Navigate(App.NavPages[tag], tag, new EntranceNavigationTransitionInfo());
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                Logger.Log(LogType.Warning, "Unable to change pages!", e);
+            }
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)

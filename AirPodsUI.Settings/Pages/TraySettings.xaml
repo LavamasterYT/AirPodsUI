@@ -19,8 +19,8 @@
             <Label VerticalAlignment="Center" Content="Y Offset (px):"/>
             <TextBox x:Name="sOffset" VerticalAlignment="Center" Width="90"/>
         </ui:SimpleStackPanel>
-        <CheckBox x:Name="sRunAtStartup" Content="Run service at startup"/>
-        <CheckBox x:Name="sAllowEditing" Content="Allow device ID editing"/>
+        <ui:ToggleSwitch x:Name="sRunAtStartup" OnContent="Run service at startup" OffContent="Do not run service at startup"/>
+        <ui:ToggleSwitch x:Name="sAllowEditing" OnContent="Allow device ID editing" OffContent="Do not allow device ID editing"/>
 
         <ui:SimpleStackPanel Orientation="Horizontal" Spacing="10">
             <Button Width="75" Content="Apply" Click="OnApplyClicked"/>

@@ -27,15 +27,6 @@ namespace AirPodsUI.Toast
                             i += 1;
                             settings.Name = e.Args[i];
                             break;
-                        case "--type":
-                            i += 1;
-                            if (e.Args[i] == "usb")
-                                settings.Device = DeviceType.USB;
-                            else if (e.Args[i] == "bluetooth" || e.Args[i] == "bt")
-                                settings.Device = DeviceType.Bluetooth;
-                            else
-                                throw new SyntaxErrorException();
-                            break;
                         case "--dark-mode":
                             settings.DarkMode = true;
                             break;
@@ -46,6 +37,7 @@ namespace AirPodsUI.Toast
             }
             catch (Exception)
             {
+                Shutdown();
                 return;
             }
 

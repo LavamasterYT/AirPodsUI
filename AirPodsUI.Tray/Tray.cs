@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using AirPodsUI.Core.Models;
 using System.Linq;
 using AirPodsUI.Core;
+using System.Drawing;
+using System.Reflection;
 using System.Diagnostics;
+using System.Windows.Forms;
+using AirPodsUI.Core.Models;
+using System.Collections.Generic;
 
 namespace AirPodsUI.Tray
 {
@@ -36,16 +36,20 @@ namespace AirPodsUI.Tray
                 Visible = false
             };
 
+            TrayService.ContextMenuStrip.Items.Add("Open Settings", null, (sender, e) => OpenSettings());
+            TrayService.ContextMenuStrip.Items.Add("Refresh", null, (sender, e) => Refresh());
             TrayService.ContextMenuStrip.Items.Add("Exit", null, (sender, e) => Exit());
 
             offset = 60;
             busy = false;
+
+            Logger.Log("Initialized tray");
         }
 
-        public void Setup()
+        public void Refresh()
         {
+            busy = true;
             devices = DevicesJson.GetDevices();
-
             if (devices.Count <= 0)
             {
                 MessageBox.Show("There are no devices added, please run the configurator to add devices.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -56,16 +60,51 @@ namespace AirPodsUI.Tray
 
             lastTick = PNP.GetPNPDevices();
 
-            timer = new System.Threading.Timer(OnTick, null, 0, settings.RefreshRate);
             offset = settings.Offset;
 
             settings.Dispose();
+            busy = false;
+        }
 
-            TrayService.Visible = true;
+        public void OpenSettings()
+        {
+            Process.Start("AirPodsUI.Settings.exe");
+        }
+
+        public void Setup()
+        {
+            try
+            {
+                devices = DevicesJson.GetDevices();
+
+                if (devices.Count <= 0)
+                {
+                    MessageBox.Show("There are no devices added, please run the configurator to add devices.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(-1);
+                }
+
+                Settings settings = new Settings();
+
+                lastTick = PNP.GetPNPDevices();
+
+                timer = new System.Threading.Timer(OnTick, null, 0, settings.RefreshRate);
+                offset = settings.Offset;
+
+                settings.Dispose();
+
+                TrayService.Visible = true;
+            }
+            catch (Exception e)
+            {
+                Logger.Log("An error occured trying to setup the tray service", e);
+                MessageBox.Show("An error occured trying to setup the tray service", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public void Exit()
         {
+            Logger.Log("Exiting, goodbye!");
+
             TrayService.Visible = false;
             TrayService.Dispose();
             timer.Dispose();
@@ -83,6 +122,11 @@ namespace AirPodsUI.Tray
                 {
                     return !(lastTick.Contains(i));
                 }).ToList();
+
+                if (differences.Count > 0)
+                {
+                    Logger.Log($"Found {differences.Count} new devices");
+                }
 
                 foreach (var i in differences)
                 {
@@ -102,10 +146,12 @@ namespace AirPodsUI.Tray
 
         public void ShowToast(Device dev)
         {
+            Logger.Log($"Showing toast for device \"{dev.Identifier}\" with an ID of \"{dev.Identifier}\"");
+
             ProcessStartInfo pToast = new ProcessStartInfo()
             {
-                FileName = $"{AppDomain.CurrentDomain.BaseDirectory}AiPodsUI.Toast.exe",
-                Arguments = $"--offset {offset} --name \"{dev.Name}\" --type usb"
+                FileName = $"{AppDomain.CurrentDomain.BaseDirectory}AirPodsUI.Toast.exe",
+                Arguments = $"--offset {offset} --name \"{dev.Name}\""
             };
 
             if (dev.DarkMode)
@@ -113,7 +159,7 @@ namespace AirPodsUI.Tray
                 pToast.Arguments += " --dark-mode";
             }
 
-            Debug.WriteLine($"Launching \"{pToast.FileName}\" with arguments \"{pToast.Arguments}\"");
+            Logger.Log($"Launching \"{pToast.FileName}\" with arguments \"{pToast.Arguments}\"");
             Process.Start(pToast);
         }
     }

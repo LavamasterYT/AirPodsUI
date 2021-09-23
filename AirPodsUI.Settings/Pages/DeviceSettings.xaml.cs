@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using AirPodsUI.Core.Models;
+using AirPodsUI.Core;
 
 namespace AirPodsUI.Settings.Pages
 {
-    /// <summary>
-    /// Interaction logic for DeviceSettings.xaml
-    /// </summary>
     public partial class DeviceSettings : Page
     {
         public static string ID { get; set; }
@@ -35,10 +24,12 @@ namespace AirPodsUI.Settings.Pages
             {
                 selectedDevice = App.Devices.Where((i) => i.Identifier == ID).FirstOrDefault();
 
+                Logger.Log(LogType.Information, "Retrieving device details for " + selectedDevice.Name);
+
                 sNameTitle.Content = selectedDevice.Name;
                 sName.Text = selectedDevice.Name;
                 sID.Text = selectedDevice.Identifier;
-                sDarkMode.IsChecked = selectedDevice.DarkMode;
+                sDarkMode.IsOn = selectedDevice.DarkMode;
                 sToastType.SelectedIndex = 0;
 
                 using (Core.Settings settings = new Core.Settings())
@@ -50,8 +41,9 @@ namespace AirPodsUI.Settings.Pages
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Log(LogType.Warning, "An unknown error occured trying to retrieve the device details.", ex);
                 await Dialog.ShowDialogAsync("Error", "An unknown error occured trying to retrieve the device details.", "OK");
             }
         }
@@ -61,41 +53,61 @@ namespace AirPodsUI.Settings.Pages
             selectedDevice.Name = sName.Text;
             selectedDevice.Identifier = sID.Text;
 
-            int index = App.Devices.FindIndex((e) =>
-            {
-                return e == selectedDevice;
-            });
+            Logger.Log(LogType.Information, "Saving device information");
 
-            if (index < 0)
+            try
             {
-                await Dialog.ShowDialogAsync("Error", "Unable to save changes!", "OK");
-            }
-            else
-            {
-                if (sToastType.SelectedIndex != 0)
+                int index = App.Devices.FindIndex((e) =>
                 {
-                    await Dialog.ShowDialogAsync("Notice", "More toast types are coming soon!", "Great!");
-                    return;
-                }
+                    return e == selectedDevice;
+                });
 
-                App.Devices[index].Name = sName.Text;
-                sNameTitle.Content = sName.Text;
-                App.Devices[index].Identifier = sID.Text;
-                App.Devices[index].DarkMode = sDarkMode.IsChecked.GetValueOrDefault(false);
-                DevicesJson.SaveDevices(App.Devices);
-                App.InvokeDeviceChange(this);
-                await Dialog.ShowDialogAsync("Success", "Successfully applied changed to device!", "OK");
+                if (index < 0)
+                {
+                    await Dialog.ShowDialogAsync("Error", "Unable to save changes!", "OK");
+                }
+                else
+                {
+                    if (sToastType.SelectedIndex != 0)
+                    {
+                        await Dialog.ShowDialogAsync("Notice", "More toast types are coming soon!", "Great!");
+                        return;
+                    }
+
+                    App.Devices[index].Name = sName.Text;
+                    sNameTitle.Content = sName.Text;
+                    App.Devices[index].Identifier = sID.Text;
+                    App.Devices[index].DarkMode = sDarkMode.IsOn;
+                    DevicesJson.SaveDevices(App.Devices);
+                    App.InvokeDeviceChange(this);
+                    await Dialog.ShowDialogAsync("Success", "Successfully applied changed to device!", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Unable to save device changes", ex);
             }
         }
 
         private void OnDeleteClicked(object sender, RoutedEventArgs e)
         {
-            sDeleteFlyout.Hide();
+            Logger.Log("Deleting current device");
+            
+            try
+            {
+                sDeleteFlyout.Hide();
 
-            App.Devices.Remove(selectedDevice);
-            DevicesJson.SaveDevices(App.Devices);
+                App.Devices.Remove(selectedDevice);
+                DevicesJson.SaveDevices(App.Devices);
 
-            App.InvokeDeviceChange(this);
+                App.InvokeDeviceChange(this);
+
+                this.NavigationService.Navigate(null);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Unable to delete device/an error occured deleting the device", ex);
+            }
         }
     }
 }

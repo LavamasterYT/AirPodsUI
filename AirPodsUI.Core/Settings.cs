@@ -1,7 +1,7 @@
 ﻿#pragma warning disable CA1416 // Validate platform compatibility
 
-using Microsoft.Win32;
 using System;
+using Microsoft.Win32;
 
 namespace AirPodsUI.Core
 {

@@ -1,13 +1,9 @@
-﻿using AirPodsUI.Core.Models;
-using AirPodsUI.Settings.Pages;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
+using AirPodsUI.Core;
+using AirPodsUI.Core.Models;
+using AirPodsUI.Settings.Pages;
+using System.Collections.Generic;
 
 namespace AirPodsUI.Settings
 {
@@ -22,19 +18,38 @@ namespace AirPodsUI.Settings
 
         public App()
         {
-            NavPages = new Dictionary<string, Type>();
-            Devices = new List<Device>();
-            Devices = DevicesJson.GetDevices();
-            OnDevicesChanged?.Invoke(this, new EventArgs());
+            Exception exLog = Logger.CreateLog("AirPodsUI Settings");
+            if (exLog != null)
+            {
+                MessageBox.Show("Unable to create logging component. Logging will be unavailable.\n\n" + exLog.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            Logger.Log(LogType.Information, "Created logger!");
+
+            try
+            {
+                NavPages = new Dictionary<string, Type>();
+                Devices = new List<Device>();
+                Devices = DevicesJson.GetDevices();
+                OnDevicesChanged?.Invoke(this, new EventArgs());
+            }
+            catch (Exception e)
+            {
+                Logger.Log(LogType.Error, "Unable to get devices!", e);
+                MessageBox.Show("There was an error trying to get the devices. Please see the log for more details. Shutting down.\n\n" + Logger.LogFile, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Shutdown();
+            }
         }
 
         public static void InvokeDeviceChange(object sender)
         {
             OnDevicesChanged?.Invoke(sender, new EventArgs());
+            Logger.Log(LogType.Information, "Invoked Device Change");
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
+            Logger.Log(LogType.Information, "Resetting navigation pages");
             ResetNavPages();
         }
 
@@ -47,6 +62,12 @@ namespace AirPodsUI.Settings
         private void OnExit(object sender, ExitEventArgs e)
         {
             
+        }
+
+        private void OnException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Logger.Log(LogType.Error, "An unknown error occured and the application had to close!", e.Exception);
+            MessageBox.Show("An unknown error occured and the application had to close! Please check the log file for details.\n\n" + Logger.LogFile, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

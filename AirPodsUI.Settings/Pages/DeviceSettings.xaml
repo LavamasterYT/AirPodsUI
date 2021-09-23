@@ -29,8 +29,8 @@
                 <ComboBoxItem Content="Windows Notification"/>
             </ComboBox>
         </ui:SimpleStackPanel>
-        
-        <CheckBox Content="Dark Mode" x:Name="sDarkMode" />
+
+        <ui:ToggleSwitch OnContent="Dark Mode" OffContent="Light Mode" x:Name="sDarkMode" />
 
         <ui:SimpleStackPanel Orientation="Horizontal" Spacing="10">
             <Button Width="75" Content="Apply" Click="OnApplyClicked"/>

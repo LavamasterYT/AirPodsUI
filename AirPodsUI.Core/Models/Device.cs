@@ -45,24 +45,12 @@ namespace AirPodsUI.Core.Models
 
         public static bool operator ==(Device a, Device b)
         {
-            return
-            (
-                a.DarkMode == b.DarkMode &&
-                a.Identifier == b.Identifier &&
-                a.Name == b.Name &&
-                a.ToastType == b.ToastType
-            );
+            return a.Identifier == b.Identifier;
         }
 
         public static bool operator !=(Device a, Device b)
         {
-            return
-            (
-                a.DarkMode != b.DarkMode ||
-                a.Identifier != b.Identifier ||
-                a.Name != b.Name ||
-                a.ToastType != b.ToastType
-            );
+            return a.Identifier != b.Identifier;
         }
     }
 

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Management;
-using System.Collections.Generic;
-using System.Text;
 using AirPodsUI.Core.Models;
+using System.Collections.Generic;
 
 namespace AirPodsUI.Core
 {

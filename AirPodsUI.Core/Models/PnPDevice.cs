@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AirPodsUI.Core.Models
+﻿namespace AirPodsUI.Core.Models
 {
     public class PnPDevice
     {

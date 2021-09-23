@@ -5,20 +5,23 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d" 
       xmlns:ui="http://schemas.modernwpf.com/2019"
-      xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
       Loaded="OnPageLoaded"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Add USB">
+      Title="Add device">
 
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto">
         <ui:SimpleStackPanel Spacing="10">
             <Label Content="Add Device" FontSize="24" Margin="0 0 0 10"/>
             <Label Content="Please make sure the device you want to add is connected"/>
+            <TextBlock>
+                    <Run IsEnabled="False" Foreground="{DynamicResource SystemControlDisabledChromeDisabledLowBrush}">Can't find the device?</Run>
+                    <Hyperlink Click="OnOpenWizardClick">Open the Device Connection Wizard</Hyperlink>
+            </TextBlock>
             <TextBox x:Name="sSearchField" ui:ControlHelper.PlaceholderText="Search devices" Width="600" HorizontalAlignment="Left" TextChanged="OnSearchTextChanged"/>
             <ListView x:Name="sDevices" Width="600" Height="300" HorizontalAlignment="Left" SelectionChanged="OnDeviceSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding Name, diag:PresentationTraceSources.TraceLevel=High}"/>
+                        <Label Content="{Binding Name}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

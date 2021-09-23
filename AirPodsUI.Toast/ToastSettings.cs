@@ -7,6 +7,5 @@ namespace AirPodsUI.Toast
         public int Offset { get; set; } = 10;
         public string Name { get; set; } = "USB Device Device";
         public bool DarkMode { get; set; } = true;
-        public DeviceType Device { get; set; } = DeviceType.USB;
     }
 }

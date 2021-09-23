@@ -1,0 +1,16 @@
+﻿<Window x:Class="AirPodsUI.Settings.Windows.DeviceWizard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        ResizeMode="NoResize"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        WindowStartupLocation="CenterScreen"
+        ui:ThemeManager.IsThemeAware="True"
+        Title="Device Connection Wizard" Height="500" Width="400">
+    <Border Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}">
+        <DockPanel LastChildFill="True" Margin="15 15">
+            <Label DockPanel.Dock="Top" FontSize="20" Content="Device Connection Wizard" />
+            <Frame Margin="0 10 0 0" x:Name="sFrame" NavigationUIVisibility="Hidden"/>
+        </DockPanel>
+    </Border>
+</Window>

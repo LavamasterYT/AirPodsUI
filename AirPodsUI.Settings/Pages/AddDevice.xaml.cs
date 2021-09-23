@@ -1,26 +1,16 @@
-﻿using AirPodsUI.Core;
-using AirPodsUI.Core.Models;
-using ModernWpf.Controls;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AirPodsUI.Core;
 using System.Windows;
+using ModernWpf.Controls;
+using AirPodsUI.Core.Models;
+using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Collections.Generic;
+using AirPodsUI.Settings.Windows;
 
 namespace AirPodsUI.Settings.Pages
 {
-    /// <summary>
-    /// Interaction logic for AddUSB.xaml
-    /// </summary>
     public partial class AddDevice : System.Windows.Controls.Page
     {
         List<PnPDevice> devices;
@@ -42,7 +32,12 @@ namespace AirPodsUI.Settings.Pages
         private async Task Refresh(bool refreshUsb)
         {
             if (refreshUsb)
+            {
+                Logger.Log(LogType.Information, "Refreshing PNP devices");
                 await RefreshDevices();
+            }
+
+            Logger.Log(LogType.Information, "Refreshing device view");
 
             sDevices.ItemsSource = listDevices;
             sDevices.Items.Refresh();
@@ -52,8 +47,16 @@ namespace AirPodsUI.Settings.Pages
         {
             await Task.Run(() =>
             {
-                devices = PNP.GetPNPDevices();
-                listDevices = new List<PnPDevice>(devices);
+                try
+                {
+                    devices = PNP.GetPNPDevices();
+                    listDevices = new List<PnPDevice>(devices);
+                }
+                catch (Exception e)
+                {
+                    listDevices = new List<PnPDevice>();
+                    Logger.Log(LogType.Warning, "Unable to scan for devices!", e);
+                }
             });
         }
 
@@ -66,6 +69,8 @@ namespace AirPodsUI.Settings.Pages
         {
             if (sDevices.SelectedIndex >= 0)
             {
+                Logger.Log(LogType.Information, "Selected device from list");
+
                 sDeviceData.IsEnabled = true;
                 sName.Text = ((PnPDevice)sDevices.SelectedItem).Name;
                 sID.Text = ((PnPDevice)sDevices.SelectedItem).PNPDeviceID;
@@ -84,6 +89,7 @@ namespace AirPodsUI.Settings.Pages
                 {
                     if (i.Identifier == sID.Text)
                     {
+                        Logger.Log(LogType.Warning, $"Unable to add device \"{i.Name}\" with ID \"{i.Identifier}\" because it already exists");
                         await Dialog.ShowDialogAsync("Warning", $"A device with the name \"{i.Name}\" already exists with the same ID!", "OK");
 
                         return;
@@ -98,69 +104,102 @@ namespace AirPodsUI.Settings.Pages
 
                 if (result == ContentDialogResult.Primary)
                 {
-                    Device dev = new Device
+                    try
                     {
-                        DarkMode = true,
-                        Identifier = sID.Text,
-                        Name = sName.Text,
-                        ToastType = Toast.Pencil
-                    };
+                        Logger.Log(LogType.Information, $"Attempting to add device \"{sName.Text}\" with ID \"{sID.Text}\"");
+                        Device dev = new Device
+                        {
+                            DarkMode = true,
+                            Identifier = sID.Text,
+                            Name = sName.Text,
+                            ToastType = Toast.Pencil
+                        };
 
-                    App.Devices.Add(dev);
-                    DevicesJson.SaveDevices(App.Devices);
+                        App.Devices.Add(dev);
+                        DevicesJson.SaveDevices(App.Devices);
 
-                    App.InvokeDeviceChange(this);
+                        App.InvokeDeviceChange(this);
 
-                    await Dialog.ShowDialogAsync("Success", $"Device \"{sName.Text}\" added successfully!", "OK");
+                        Logger.Log(LogType.Information, $"Successfully saved device \"{sName.Text}\" with ID \"{sID.Text}\"");
+                        await Dialog.ShowDialogAsync("Success", $"Device \"{sName.Text}\" added successfully!", "OK");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log(LogType.Warning, $"Was unable to add device \"{sName.Text}\" with ID \"{sID.Text}\"", ex);
+                        await Dialog.ShowDialogAsync("Error", $"Unable to add device \"{sName.Text}\"", "OK");
+                    }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                await Dialog.ShowDialogAsync("Error", "Unable to add device", "OK");
+                Logger.Log(LogType.Warning, $"Was unable to add device \"{sName.Text}\" with ID \"{sID.Text}\" because an unknown error occured", ex);
+                await Dialog.ShowDialogAsync("Error", "An unknown error occured trying to add the device", "OK");
             }
         }
 
         private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
         {
-            listDevices = devices.Where((i) =>
+            try
             {
-                try
+                listDevices = devices.Where((i) =>
                 {
-                    return i.Name.ToLower().Contains(sSearchField.Text.ToLower());
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }).ToList();
+                    try
+                    {
+                        return i.Name.ToLower().Contains(sSearchField.Text.ToLower());
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }).ToList();
 
-            await Refresh(false);
+                await Refresh(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogType.Warning, "Unable to search devices for some reason", ex);
+            }
         }
 
         private async void OnFilterChanged(object sender, SelectionChangedEventArgs e)
         {
-            listDevices = devices.Where((i) =>
+            try
             {
-                try
+                Logger.Log(LogType.Information, "Filtering devices");
+
+                listDevices = devices.Where((i) =>
                 {
-                    ComboBoxItem item = sFilter.SelectedItem as ComboBoxItem;
-
-                    string[] filterText = item.Content.ToString().Split('/');
-
-                    foreach (var j in filterText)
+                    try
                     {
-                        return i.PNPDeviceID.ToLower().StartsWith(j.ToLower());
+                        ComboBoxItem item = sFilter.SelectedItem as ComboBoxItem;
+
+                        string[] filterText = item.Content.ToString().Split('/');
+
+                        foreach (var j in filterText)
+                        {
+                            return i.PNPDeviceID.ToLower().StartsWith(j.ToLower());
+                        }
+
+                        return false;
                     }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }).ToList();
 
-                    return false;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }).ToList();
+                await Refresh(false);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogType.Warning, "Unable to filter devices for some reason", ex);
+            }
+        }
 
-            await Refresh(false);
+        private void OnOpenWizardClick(object sender, RoutedEventArgs e)
+        {
+            DeviceWizard wizard = new DeviceWizard();
+            wizard.ShowDialog();
         }
     }
 }

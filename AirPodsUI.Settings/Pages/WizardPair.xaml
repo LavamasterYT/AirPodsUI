@@ -1,0 +1,31 @@
+﻿<Page x:Class="AirPodsUI.Settings.Pages.WizardPair"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      Loaded="OnPageLoaded"
+      Unloaded="OnPageUnloaded"
+      mc:Ignorable="d" 
+      x:Name="sWindow"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Pair Device">
+
+    <DockPanel LastChildFill="True">
+        <TextBlock Margin="0 0 0 10" DockPanel.Dock="Top" TextWrapping="Wrap" Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" Text="Plug in the device you want to pair. Once connected, it should pop up on this list. Select it, then press next."/>
+        <ui:ProgressBar IsIndeterminate="True" Width="{Binding Width, ElementName=sWindow}" DockPanel.Dock="Top" />
+        <ListBox Height="300" DockPanel.Dock="Top" x:Name="sDevices" SelectionChanged="OnDeviceSelected">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Name}" ToolTip="{Binding PnPDeviceID}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ui:SimpleStackPanel Spacing="5" Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+            <Button Content="Back" VerticalAlignment="Bottom" Width="75" HorizontalAlignment="Right" Click="OnBackClicked" />
+            <Button Content="Next" VerticalAlignment="Bottom" Width="75" HorizontalAlignment="Right" Click="OnNextClicked" IsEnabled="False" x:Name="sNextBtn"/>
+        </ui:SimpleStackPanel>
+        <Grid/>
+    </DockPanel>
+</Page>

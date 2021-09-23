@@ -1,9 +1,9 @@
 ﻿<Window x:Class="AirPodsUI.Settings.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         Loaded="OnWindowLoaded"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:TitleBar.ExtendViewIntoTitleBar="True"
         ui:ThemeManager.IsThemeAware="True"
         Title="AirPodsUI Settings" Height="620" Width="1030">
