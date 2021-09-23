@@ -11,7 +11,10 @@ Some of the main features include:
 - And probably more
 
 ## Downloads
-Currently, there are no downloads (see the next section), so the current way to test it out is to clone the repository and compiling it yourself. Until it is stable enough to release a beta, I will provide a setup file to download
+Go to the releases section for the setup files, keep in mind that it is very early release and bugs will be present.
+
+## Building
+Instructions will come soon, but it's just a C# project in visual studio that you can probably build by just running `dotnet build`.
 
 ## History
 This project started out back in November of 2019 as a proof of concept. It originally added just the card that pop-ups when you open your AirPods on your phone. I posted it on r/airpods on Reddit where it gained some attenion, enough for me to continue to work on it. In April, I released an improved version that was much quicker than the previous version (it used to take like 20 seconds from when you open your airpods to the pop up to literally as soon as windows connects to it). After that I made some minor improvements, UI changes, etc and then took a long break (I was unmotivated to work on it). It wasn't until mid-September where I decided to pick up on it because I was bored and here we are.
